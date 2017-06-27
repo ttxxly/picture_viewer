@@ -96,7 +96,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="28dp"
         android:layout_marginRight="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="35dp"
         android:background="#3aadfd"
         android:text="注  册"
         android:textColor="#ffffff"

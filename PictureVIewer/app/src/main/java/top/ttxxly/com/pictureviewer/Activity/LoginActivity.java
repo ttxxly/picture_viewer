@@ -1,5 +1,6 @@
-package top.ttxxly.com.pictureviewer;
+package top.ttxxly.com.pictureviewer.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,12 @@ import com.google.gson.Gson;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import top.ttxxly.com.pictureviewer.Abstract.User;
+import top.ttxxly.com.pictureviewer.Abstract.parse;
+import top.ttxxly.com.pictureviewer.R;
+import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
+import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,21 +40,23 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "点击了登录按钮", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "点击了登录按钮", Toast.LENGTH_SHORT).show();
                 StartRequestFromPHP();
             }
         });
         tv_register = (TextView) findViewById(R.id.tv_register);
-
-
+        tv_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            }
+        });
     }
 
-    private void StartRequestFromPHP()
-    {
+    private void StartRequestFromPHP() {
         //新建线程
-        new Thread(){
-            public void run(){
-
+        new Thread() {
+            public void run() {
                 try {
                     SendRequest();
                 } catch (Exception e) {
@@ -55,15 +64,21 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         }.start();
+        if (SharedPreferenceUtils.getBoolean("loginInfo", true, this)) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }else {
+            Toast.makeText(getApplicationContext(), "用户名或者密码错误。。", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
-    private  void SendRequest(){
+    private void SendRequest() {
         User user = new User();
         user.init();
         String s = et_nickname.getText().toString();
-        if (isMobile(s)){
+        if (isMobile(s)) {
             user.setMobile(s);
-        }else{
+        } else {
             user.setNickname(s);
         }
         user.setPassword(et_password.getText().toString());
@@ -100,8 +115,13 @@ public class LoginActivity extends AppCompatActivity {
                 String mobile = value.getMobile();
                 String portrait = value.getPortrait();
                 Log.i("返回data", flat + "::" + message + "::" + nickname + "::" + password + "::" + mobile + "::" + portrait);
-                if (flat.equals("")) {
-
+                if (flat.equals("success")) {
+                    SharedPreferenceUtils.putBoolean("loginInfo", true, this);
+                    SharedPreferenceUtils.putString("loginNickname", nickname, this);
+                    SharedPreferenceUtils.putString("loginPassword", password, this);
+                    SharedPreferenceUtils.putString("loginMobile", mobile, this);
+                    SharedPreferenceUtils.putString("loginPortrait", portrait, this);
+                    Toast.makeText(getApplicationContext(), "登录成功，3秒后跳转。。。", Toast.LENGTH_SHORT).show();
                 }
 
             } else {
@@ -117,19 +137,20 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-    private boolean isMobile(String s){
+
+    private boolean isMobile(String s) {
         int len = s.length();
-        if(len != 11) {
+        if (len != 11) {
             return false;
         }
         boolean flag = true;
-        for(int i=0; i<len; i++){
-            if(s.charAt(i)<'0' || s.charAt(i)>'9') {
+        for (int i = 0; i < len; i++) {
+            if (s.charAt(i) < '0' || s.charAt(i) > '9') {
                 flag = false;
                 break;
             }
         }
-        if(flag )
+        if (flag)
             return true;
         else return false;
     }

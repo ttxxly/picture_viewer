@@ -1,4 +1,4 @@
-package top.ttxxly.com.pictureviewer;
+package top.ttxxly.com.pictureviewer.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
