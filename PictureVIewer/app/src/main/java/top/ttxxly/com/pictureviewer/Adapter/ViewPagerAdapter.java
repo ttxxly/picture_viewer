@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public class MyAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> data;
 
-    public MyAdapter(FragmentManager fm, List<Fragment> data) {
+    public ViewPagerAdapter(FragmentManager fm, List<Fragment> data) {
         super(fm);
         this.data = data;
     }

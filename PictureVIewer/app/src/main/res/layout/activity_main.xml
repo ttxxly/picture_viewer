@@ -18,7 +18,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="0.03">
 
         <TextView
             android:id="@+id/tv_home"
@@ -35,6 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:textSize="18sp"
             android:text="分类" />
 
@@ -44,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
+            android:layout_gravity="center"
             android:text="我的图片" />
 
         <TextView
@@ -51,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:text="个人中心"
             android:textSize="18sp"/>
     </LinearLayout>

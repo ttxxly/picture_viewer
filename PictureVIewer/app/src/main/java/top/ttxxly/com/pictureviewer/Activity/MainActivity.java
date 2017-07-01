@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.ttxxly.com.pictureviewer.Adapter.MyAdapter;
+import top.ttxxly.com.pictureviewer.Adapter.ViewPagerAdapter;
 import top.ttxxly.com.pictureviewer.Fragment.ClassificationFragment;
 import top.ttxxly.com.pictureviewer.Fragment.HomeFragment;
 import top.ttxxly.com.pictureviewer.Fragment.MyPhotoFragment;
@@ -22,7 +22,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private ViewPager mViewPager;
     private List<Fragment> data;
-    private MyAdapter myAdapter;
+    private ViewPagerAdapter viewPagerAdapter;
     private TextView mHome;
     private TextView mCategory;
     private TextView mMyPhoto;
@@ -36,8 +36,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         initData();//初始化数据集
         initView();// 初始化控件
         initClickListener();// 事件侦听
-        myAdapter=new MyAdapter(getSupportFragmentManager(),data);//初始化适配器类
-        mViewPager.setAdapter(myAdapter);
+        viewPagerAdapter =new ViewPagerAdapter(getSupportFragmentManager(),data);//初始化适配器类
+        mViewPager.setAdapter(viewPagerAdapter);
     }
 
     private void initView() {

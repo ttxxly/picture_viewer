@@ -6,38 +6,72 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.GridView;
 
-import com.bumptech.glide.Glide;
-
+import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
 
 
 public class MyPhotoFragment extends Fragment {
 
+    public static String[] imageSources = {
+            "http://img15.3lian.com/2016/h1/124/171.jpg",
+            "http://scimg.jb51.net/allimg/150819/14-150QZ9194K27.jpg",
+            "http://pic.58pic.com/58pic/16/00/52/11J58PICD3S_1024.jpg",
+            "http://pic19.huitu.com/res/20140427/33714_20140427005724677341_1.jpg",
+            "http://pic19.huitu.com/res/20140427/33714_20140427005724677341_1.jpg",
+            "http://pic15.photophoto.cn/20100615/0006019058815826_b.jpg",
+            "http://pic33.photophoto.cn/20141204/0006019060393096_b.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/b03533fa828ba61e5e6d4c0d4b34970a304e5915.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/574e9258d109b3de25b6324bc6bf6c81800a4c8c.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/5366d0160924ab18cb0aad123ffae6cd7b890bf2.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/0dd7912397dda144ccc45891b8b7d0a20df486c7.jpg",
+            "http://www.chla.com.cn/uploadfile/2011/new2011617/images/2013/10/20131011164609.jpg",
+            "http://tupian.enterdesk.com/2013/mxy/12/28/1/3.jpg",
+            "http://pic.58pic.com/58pic/17/14/25/30X58PICbYW_1024.jpg"
+    };
+    public static String[] title = {
+            "vfdgdf",
+            "vfdf",
+            "vergdf",
+            "vereredf",
+            "vfwerewte",
+            "vfddgd",
+            "vdddddd",
+            "vftttt",
+            "vfdbbbbb",
+            "vfdgddddd",
+            "vfdg3333",
+            "vfdgddddd",
+            "vfdg3333",
+            "vfdgddddd"
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_photo, container, false);
-        ImageView mMyPhoto = (ImageView) view.findViewById(R.id.img_my_photo);
-        ImageView mMyPhoto2 = (ImageView) view.findViewById(R.id.img_my_photo2);
-        ImageView mMyPhoto3 = (ImageView) view.findViewById(R.id.img_my_photo3);
-        ImageView mMyPhoto4 = (ImageView) view.findViewById(R.id.img_my_photo4);
-        ImageView mMyPhoto5 = (ImageView) view.findViewById(R.id.img_my_photo5);
-        ImageView mMyPhoto6 = (ImageView) view.findViewById(R.id.img_my_photo6);
 
-        String internetUrl1 = "http://android-artworks.25pp.com/fs08/2016/06/07/10/1_35b0c5cda3e1051acb9068b0c79d6fe9_con.png";
-        String internetUrl2 = "http://img2.imgtn.bdimg.com/it/u=1012912279,3382694267&fm=26&gp=0.jpg";
-        String internetUrl3 = "http://img4.duitang.com/uploads/item/201408/30/20140830185456_Eijik.jpeg";
-        String internetUrl4 = "http://img2.imgtn.bdimg.com/it/u=2316535535,872567517&fm=214&gp=0.jpg";
-        String internetUrl5 = "http://img0.ph.126.net/XjXl3KcowmXdE1pcsFVe8g==/1067353111787095545.jpg";
-        String internetUrl6 = "http://pic38.nipic.com/20140303/18070641_203310278152_2.jpg";
-        Glide.with(this).load(internetUrl1).into(mMyPhoto);
-        Glide.with(this).load(internetUrl2).into(mMyPhoto2);
-        Glide.with(this).load(internetUrl3).into(mMyPhoto3);
-        Glide.with(this).load(internetUrl4).into(mMyPhoto4);
-        Glide.with(this).load(internetUrl5).into(mMyPhoto5);
-        Glide.with(this).load(internetUrl6).into(mMyPhoto6);
+        GridView gv_my_photo = (GridView) view.findViewById(R.id.gv_my_photo);
+        gv_my_photo.setAdapter(new GlideAdapter(imageSources));
+        /*gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });*/
 
         // Inflate the layout for this fragment
         return view;

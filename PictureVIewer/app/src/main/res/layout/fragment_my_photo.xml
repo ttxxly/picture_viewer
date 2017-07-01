@@ -5,43 +5,18 @@
     tools:context="top.ttxxly.com.pictureviewer.Fragment.MyPhotoFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <GridView
+            android:id="@+id/gv_my_photo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            />
 
-        <ImageView
-            android:id="@+id/img_my_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="我的图片页面" />
-        <ImageView
-            android:id="@+id/img_my_photo2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="我的图片页面" />
-        <ImageView
-            android:id="@+id/img_my_photo3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="我的图片页面" />
-        <ImageView
-            android:id="@+id/img_my_photo4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="我的图片页面" />
-        <ImageView
-            android:id="@+id/img_my_photo5"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="我的图片页面" />
-        <ImageView
-            android:id="@+id/img_my_photo6"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="我的图片页面" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </FrameLayout>
