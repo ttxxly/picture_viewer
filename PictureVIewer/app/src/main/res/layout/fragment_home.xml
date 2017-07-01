@@ -1,0 +1,34 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="top.ttxxly.com.pictureviewer.Fragment.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/img_head_portrait"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/login_pic" />
+
+        <EditText
+            android:layout_width="215dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/img_head_portrait"
+            android:layout_marginLeft="60dp" />
+
+        <Button
+            android:id="@+id/btn_main_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="搜索"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+</FrameLayout>

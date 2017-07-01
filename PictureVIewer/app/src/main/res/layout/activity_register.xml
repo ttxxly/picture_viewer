@@ -28,13 +28,13 @@
             android:text="用户名"
             android:textSize="20sp"/>
         <EditText
-            android:id="@+id/et_nickname"
+            android:id="@+id/et_register_nickname"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_weight="1"
             android:background="@null"
             android:ems="10"
-            android:hint="请输入昵称或电话号"
+            android:hint="请输入昵称"
             android:imeOptions="actionDone"
             android:textColorHint="#AAAAAA"
             android:textSize="16sp" />
@@ -54,7 +54,7 @@
             android:textSize="20sp"/>
 
         <EditText
-            android:id="@+id/et_passwd"
+            android:id="@+id/et_register_password"
             android:layout_width="fill_parent"
             android:layout_height="44dp"
             android:background="#00ffffff"
@@ -89,7 +89,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_register_register"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/input"

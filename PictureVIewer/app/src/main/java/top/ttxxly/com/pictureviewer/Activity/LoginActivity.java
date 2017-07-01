@@ -2,6 +2,8 @@ package top.ttxxly.com.pictureviewer.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import top.ttxxly.com.pictureviewer.Abstract.User;
-import top.ttxxly.com.pictureviewer.Abstract.parse;
+import top.ttxxly.com.pictureviewer.Abstract.Login;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
@@ -28,20 +30,49 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_password;
     private Button btn_login;
     private TextView tv_register;
+    private String s;   //保存返回的 JSON 数据
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+
+            switch (msg.what) {
+                case 1:
+                    s = msg.obj.toString();
+                    Log.i("S", s);
+                    Login value = new Gson().fromJson(s, Login.class);
+                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                    SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
+                    SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
+                    SharedPreferenceUtils.putString("loginPassword", value.getPassword(), getApplicationContext());
+                    SharedPreferenceUtils.putString("loginMobile", value.getMobile(), getApplicationContext());
+
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                    break;
+                case -1:
+                    Toast.makeText(getApplicationContext(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        et_nickname = (EditText) findViewById(R.id.et_nickname);
-        et_password = (EditText) findViewById(R.id.et_password);
+        et_nickname = (EditText) findViewById(R.id.et_login_nickname);
+        et_password = (EditText) findViewById(R.id.et_login_password);
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getApplicationContext(), "点击了登录按钮", Toast.LENGTH_SHORT).show();
                 StartRequestFromPHP();
+
             }
         });
         tv_register = (TextView) findViewById(R.id.tv_register);
@@ -53,26 +84,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     private void StartRequestFromPHP() {
+
         //新建线程
         new Thread() {
             public void run() {
                 try {
-                    SendRequest();
+                    SendRequestToLogin();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }.start();
-        if (SharedPreferenceUtils.getBoolean("loginInfo", true, this)) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }else {
-            Toast.makeText(getApplicationContext(), "用户名或者密码错误。。", Toast.LENGTH_SHORT).show();
-        }
-
     }
 
-    private void SendRequest() {
+    private void SendRequestToLogin() {
         User user = new User();
         user.init();
         String s = et_nickname.getText().toString();
@@ -107,23 +134,24 @@ public class LoginActivity extends AppCompatActivity {
                 String data = StreamUtils.Stream2String(is);
 
                 Log.i("data", data);
-                parse value = new Gson().fromJson(data, parse.class);
+                Login value = new Gson().fromJson(data, Login.class);
                 String flat = value.getFlat();
                 String message = value.getMessage();
                 String nickname = value.getNickname();
                 String password = value.getPassword();
                 String mobile = value.getMobile();
                 String portrait = value.getPortrait();
+                Message msg = new Message();
                 Log.i("返回data", flat + "::" + message + "::" + nickname + "::" + password + "::" + mobile + "::" + portrait);
                 if (flat.equals("success")) {
-                    SharedPreferenceUtils.putBoolean("loginInfo", true, this);
-                    SharedPreferenceUtils.putString("loginNickname", nickname, this);
-                    SharedPreferenceUtils.putString("loginPassword", password, this);
-                    SharedPreferenceUtils.putString("loginMobile", mobile, this);
-                    SharedPreferenceUtils.putString("loginPortrait", portrait, this);
-                    Toast.makeText(getApplicationContext(), "登录成功，3秒后跳转。。。", Toast.LENGTH_SHORT).show();
-                }
+                    Log.i("Status", "登录成功，3秒后跳转。。。" );
+                    msg.what = 1;
+                    msg.obj = data;
 
+                }else {
+                    msg.what = -1;
+                }
+                handler.sendMessage(msg);
             } else {
                 Log.i("访问失败", "responseCode");
             }

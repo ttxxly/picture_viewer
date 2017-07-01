@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
+            SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
             if (SharedPreferenceUtils.getBoolean("loginInfo", true, getApplicationContext())) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 //finish();

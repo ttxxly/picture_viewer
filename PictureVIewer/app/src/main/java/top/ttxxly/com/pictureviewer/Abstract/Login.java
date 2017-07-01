@@ -10,7 +10,7 @@ package top.ttxxly.com.pictureviewer.Abstract;
  * 'portrait'=>$row->portrait
  */
 
-public class parse {
+public class Login {
     public String flat;
     public String message;
     public String nickname;
