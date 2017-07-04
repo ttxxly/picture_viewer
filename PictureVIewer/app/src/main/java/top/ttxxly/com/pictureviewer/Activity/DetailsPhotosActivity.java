@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import top.ttxxly.com.pictureviewer.Abstract.Photos;
+import top.ttxxly.com.pictureviewer.models.Photos;
 import top.ttxxly.com.pictureviewer.R;
 
 public class DetailsPhotosActivity extends AppCompatActivity {

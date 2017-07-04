@@ -17,8 +17,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import top.ttxxly.com.pictureviewer.Abstract.Register;
-import top.ttxxly.com.pictureviewer.Abstract.Login;
+import top.ttxxly.com.pictureviewer.models.Register;
+import top.ttxxly.com.pictureviewer.models.Login;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;

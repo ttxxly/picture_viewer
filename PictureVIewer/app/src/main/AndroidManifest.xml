@@ -3,6 +3,8 @@
     package="top.ttxxly.com.pictureviewer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,8 +23,10 @@
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Adapter.ViewPagerAdapter" />
-        <activity android:name=".Activity.DetailsPhotosActivity"></activity>
+        <activity android:name=".Activity.DetailsPhotosActivity" />
+        <activity android:name=".Activity.EditInfo1Activity" />
+        <activity android:name=".Activity.EditInfo2Activity" />
+        <activity android:name=".Activity.EditInfo2Step2Activity"></activity>
     </application>
 
 </manifest>

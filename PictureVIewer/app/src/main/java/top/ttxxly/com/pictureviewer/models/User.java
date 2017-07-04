@@ -1,4 +1,4 @@
-package top.ttxxly.com.pictureviewer.Abstract;
+package top.ttxxly.com.pictureviewer.models;
 
 /**
  * Created by ttxxly on 2017/6/27.
