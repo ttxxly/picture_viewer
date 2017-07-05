@@ -1,83 +1,72 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: öÎ
+ * User: é‘«
  * Date: 2017/6/27
  * Time: 14:10
  */
-//Á´½ÓÊý¾Ý¿â
-$conn=mysql_connect("localhost","root","") or die("Êý¾Ý¿âÁ¬½Ó´íÎó".mysql_error());
-mysql_select_db("photograph",$conn) or die("Êý¾Ý¿â·ÃÎÊ´íÎó".mysql_error());
+//é“¾æŽ¥æ•°æ®åº“
+$conn=mysql_connect("localhost","root","") or die("æ•°æ®åº“è¿žæŽ¥é”™è¯¯".mysql_error());
+mysql_select_db("photograph",$conn) or die("æ•°æ®åº“è®¿é—®é”™è¯¯".mysql_error());
 mysql_query("SET NAMES UTF8");
 
-//µÇÂ½
-$nickname =@$_GET['nickname'];
-$password =@$_GET['password'];
-$mobile =@$_GET['mobile'];
-//
-//$nickname = '123';
-//$password = '123';
-//$mobile = '';
-//
+//ç™»é™†
+//$nickname =@$_GET['nickname'];
+$password ='mm';
+$mobile ='666';
 
-//echo $nickname.$password.$mobile."·¢ÈÈ¹ÜÈç¹û";
-$arr=array(
-	'nickname1'=>$nickname,
-	'password1'=>$password,
-	'mobile1'=>$mobile
-);
-
-
-if (!empty($nickname)) {
-    $sql = "select * from user where nickname='$nickname' and password='$password'";
+if (empty($nickname)) {
+    $sql = "select * from user where mobile='$mobile' and password='$password'";
     $result = mysql_query($sql);
     if($row=@mysql_fetch_object($result)){
-		$arr=array(
-			'flat'=>'success',
-			'message'=>'µÇÂ½³É¹¦',
-			'nickname'=>$row->nickname,
-			'password'=>$row->password,
-			'mobile'=>$row->mobile,
-			'portrait'=>$row->portrait,
-			'nickname1'=>$nickname,
-			'password1'=>$password,
-			'mobile1'=>$mobile
-		);
+    $arr=array(
+        'flat'=>'success',
+        'message'=>'ç™»é™†æˆåŠŸ',
+        'id'=>$row->id,
+        'nickname'=>$row->nickname,
+        'password'=>$row->password,
+        'mobile'=>$row->mobile,
+        'portrait'=>$row->portrait
+    );
     }
     else{
         $arr=array(
-            'flat'=>'fail',
-            'message'=>'µÇÂ½Ê§°Ü',
-			'nickname1'=>$nickname,
-			'password1'=>$password,
-			'mobile1'=>$mobile
+            'flat'=>'sfail',
+            'message'=>'ç™»é™†å¤±è´¥'
         );
     }
-}else if(!empty($mobile)){
-    $sql = "select * from user where mobile='$mobile' and password='$password'";
+}
+elseif(empty($mobile)){
+    $sql = "select * from user where nickname='$nickname' and password='$password'";
     $result = mysql_query($sql);
     if($row=@mysql_fetch_object($result)){
         $arr=array(
             'flat'=>'success',
-            'message'=>'µÇÂ½³É¹¦',
+            'message'=>'ç™»é™†æˆåŠŸ',
+            'id'=>$row->id,
             'nickname'=>$row->nickname,
             'password'=>$row->password,
             'mobile'=>$row->mobile,
-            'portrait'=>$row->portrait,
-			'nickname1'=>$nickname,
-			'password1'=>$password,
-			'mobile1'=>$mobile
+            'portrait'=>$row->portrait
         );
-    }else{
+    }
+    else{
         $arr=array(
             'flat'=>'fail',
-            'message'=>'µÇÂ½Ê§°Ü',
-			'nickname1'=>$nickname,
-			'password1'=>$password,
-			'mobile1'=>$mobile
+            'message'=>'ç™»é™†å¤±è´¥'
         );
     }
 }
+$strr=json_encode($arr);
+echo($strr);
 
-echo(json_encode($arr));	//·µ¸ø¿Í»§¶Ë JSON Êý¾Ý
+//$sql = "select * from user where nickname='bababa' and password='baba'";
+//$result = mysql_query($sql);
+//$row=@mysql_fetch_object($result);
+//print_r($row);
+//echo "$row->nickname";
+//echo "$row->password";
+//echo "$row->mobile";
+
+
 ?>

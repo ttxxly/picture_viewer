@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import top.ttxxly.com.pictureviewer.Adapter.ViewPagerAdapter;
-import top.ttxxly.com.pictureviewer.Fragment.ClassificationFragment;
+import top.ttxxly.com.pictureviewer.Fragment.CategoryFragment;
 import top.ttxxly.com.pictureviewer.Fragment.HomeFragment;
 import top.ttxxly.com.pictureviewer.Fragment.MyPhotoFragment;
 import top.ttxxly.com.pictureviewer.Fragment.PeopleFragment;
@@ -152,7 +152,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void initData() {
         data=new ArrayList<Fragment>();
         data.add(new HomeFragment());
-        data.add(new ClassificationFragment());
+        data.add(new CategoryFragment());
         data.add(new MyPhotoFragment());
         data.add(new PeopleFragment());
     }

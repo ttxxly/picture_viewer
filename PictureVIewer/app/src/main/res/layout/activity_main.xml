@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:background="#555555"
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
@@ -25,18 +25,18 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@mipmap/login_pic" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:text="分享"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="主页"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -49,12 +49,6 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@mipmap/search" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/add" />
 
         </LinearLayout>
 
@@ -108,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/img_add_pictures"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@mipmap/add_pictures"
                 android:layout_centerInParent="true"
                 />

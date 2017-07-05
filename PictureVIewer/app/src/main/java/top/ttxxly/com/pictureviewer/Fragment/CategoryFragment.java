@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 
 import top.ttxxly.com.pictureviewer.R;
 
-public class ClassificationFragment extends Fragment {
+public class CategoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_classification, container, false);
+        return inflater.inflate(R.layout.fragment_category, container, false);
     }
 
 }
