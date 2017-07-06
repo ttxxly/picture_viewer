@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2D3D54"
     tools:context="top.ttxxly.com.pictureviewer.Activity.EditInfo1Activity"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#555555"
+        android:background="#26324b"
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
 
@@ -48,9 +49,9 @@
                 android:id="@+id/btn_edit_info1_confirm"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:textColor="#FFFFFF"
+                android:background="#0AB5CF"
                 android:text="确定"
-                android:background="#008800"
+                android:textColor="#CACDD0"
                 android:textSize="15sp" />
 
         </LinearLayout>

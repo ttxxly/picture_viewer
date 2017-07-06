@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PictureViewer</string>
+    <string name="register_tip">我们向您承诺不会公开您的个人资料，尊重您的隐私</string>
+    <string name="user_name">UserName</string>
+    <string name="user_mobile">Mobile</string>
+    <string name="user_password">Password</string>
+
 </resources>

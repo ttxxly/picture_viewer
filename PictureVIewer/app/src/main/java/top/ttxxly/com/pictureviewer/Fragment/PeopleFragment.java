@@ -16,6 +16,7 @@ import android.widget.Toast;
 import top.ttxxly.com.pictureviewer.Activity.EditInfo1Activity;
 import top.ttxxly.com.pictureviewer.Activity.EditInfo2Activity;
 import top.ttxxly.com.pictureviewer.Activity.LoginActivity;
+import top.ttxxly.com.pictureviewer.Activity.MainActivity;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 
@@ -31,7 +32,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout rl_portrait;
     private RelativeLayout rl_nickname;
     private RelativeLayout rl_phone;
-    private TextView password;
+    private RelativeLayout password;
     private Button logout;
     private TextView nickname;
     private TextView phone;
@@ -47,7 +48,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
         rl_portrait = (RelativeLayout) view.findViewById(R.id.RL_fragment_people_portrait);
         rl_nickname = (RelativeLayout) view.findViewById(R.id.RL_fragment_people_nickname);
         rl_phone = (RelativeLayout) view.findViewById(R.id.RL_fragment_people_phone);
-        password = (TextView) view.findViewById(R.id.tv_fragment_people_editPassword);
+        password = (RelativeLayout) view.findViewById(R.id.RL_fragment_people_editPassword);
         logout = (Button) view.findViewById(R.id.btn_logout);
         nickname = (TextView) view.findViewById(R.id.tv_fragment_people_nickname);
         phone = (TextView) view.findViewById(R.id.tv_fragment_people_phone);
@@ -88,7 +89,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
                 intent.putExtra("code", EDIT_MOBILE_CODE);
                 startActivityForResult(intent, EDIT_MOBILE_CODE);
                 break;
-            case R.id.tv_fragment_people_editPassword:
+            case R.id.RL_fragment_people_editPassword:
                 Toast.makeText(getContext(), "修改密码", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), EditInfo2Activity.class);
                 startActivityForResult(intent, EDIT_PASSWORD_CODE);
@@ -97,6 +98,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
                 SharedPreferenceUtils.putBoolean("loginInfo", false, getContext());
                 Toast.makeText(getContext(), "退出成功", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(), LoginActivity.class));
+                MainActivity.mContext.finish();
                 break;
         }
     }

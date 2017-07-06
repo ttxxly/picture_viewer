@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -66,6 +67,14 @@ public class RegisterActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.et_register_password);
         mobile = (EditText) findViewById(R.id.et_register_mobile);
         regitser = (Button) findViewById(R.id.btn_register_register);
+        ImageView mReturn = (ImageView) findViewById(R.id.img_register_return_top);
+        mReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
         regitser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

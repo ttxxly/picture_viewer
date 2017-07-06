@@ -1,7 +1,6 @@
 package top.ttxxly.com.pictureviewer.Activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -76,8 +75,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private String resultStr = "";	// 服务端返回结果集
     private static ProgressDialog pd;// 等待进度圈
     private CircleImg avatarImg;// 头像图片
-    private Context mContext;
-
+    public static MainActivity mContext = null;
+    private ImageView mSearch;
+    private TextView mDescription;
 
 
     @Override
@@ -86,9 +86,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
         mContext = MainActivity.this;
 
+
         initData();//初始化数据集
         initView();// 初始化控件
         initClickListener();// 事件侦听
+        resetBottomBar();
+        mHome.setTextColor(Color.parseColor("#227700"));
         viewPagerAdapter =new ViewPagerAdapter(getSupportFragmentManager(),data);//初始化适配器类
         mViewPager.setAdapter(viewPagerAdapter);
     }
@@ -100,6 +103,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mMyPhoto = (TextView) findViewById(R.id.tv_my_photo);
         mPeople = (TextView) findViewById(R.id.tv_people);
         mAdd_pictures = (ImageView) findViewById(R.id.img_add_pictures);
+        mSearch = (ImageView) findViewById(R.id.img_search);
+        mDescription = (TextView) findViewById(R.id.tv_main_activity_description);
     }
 
     /**
@@ -112,6 +117,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mMyPhoto.setOnClickListener(this);
         mPeople.setOnClickListener(this);
         mAdd_pictures.setOnClickListener(this);
+        mSearch.setOnClickListener(this);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {//ViewPager滑动切换监听
             @Override
@@ -121,18 +127,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     case 0:
                         resetBottomBar();
                         mHome.setTextColor(Color.parseColor("#227700"));
+                        mDescription.setText("主页");
                         break;
                     case 1:
                         resetBottomBar();
                         mCategory.setTextColor(Color.parseColor("#227700"));
+                        mDescription.setText("分类");
                         break;
                     case 2:
                         resetBottomBar();
                         mMyPhoto.setTextColor(Color.parseColor("#227700"));
+                        mDescription.setText("我的图片");
                         break;
                     case 3:
                         resetBottomBar();
                         mPeople.setTextColor(Color.parseColor("#227700"));
+                        mDescription.setText("个人中心");
                         break;
                     default:
                         break;
@@ -182,6 +192,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 menuWindow.showAtLocation(findViewById(R.id.LL_MainLayout),
                         Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 //startActivity(new Intent(getApplicationContext(), AddPhotosActivity.class));
+                break;
+            case R.id.img_search:
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                 break;
         }
     }
@@ -386,9 +399,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      * 重置字体颜色
      * */
     private void resetBottomBar(){
-        mHome.setTextColor(Color.parseColor("#DDDDDD"));
-        mCategory.setTextColor(Color.parseColor("#DDDDDD"));
-        mMyPhoto.setTextColor(Color.parseColor("#DDDDDD"));
-        mPeople.setTextColor(Color.parseColor("#DDDDDD"));
+        mHome.setTextColor(Color.parseColor("#CACDD0"));
+        mCategory.setTextColor(Color.parseColor("#CACDD0"));
+        mMyPhoto.setTextColor(Color.parseColor("#CACDD0"));
+        mPeople.setTextColor(Color.parseColor("#CACDD0"));
     }
 }

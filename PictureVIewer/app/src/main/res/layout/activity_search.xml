@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2D3D54"
     tools:context="top.ttxxly.com.pictureviewer.Activity.SearchActivity"
     android:orientation="vertical">
 
@@ -11,34 +12,35 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_centerVertical="true"
-        android:background="#555555"
+        android:background="#26324b"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:paddingLeft="5dp">
 
         <ImageView
-            android:id="@+id/img_edit_info2_step2_return_top"
+            android:id="@+id/img_search_return_top"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@mipmap/return_top" />
 
 
         <EditText
-            android:layout_width="250dp"
+            android:id="@+id/et_search_input"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:theme="@style/MyEditText"/>
+            android:layout_marginLeft="20dp"
+            android:theme="@style/MyEditText" />
 
         <Button
+            android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
+            android:background="#26324b"
             android:text="搜索"
-            android:textSize="16sp"
-            android:background="#555555"/>
+            android:textColor="#CACDD0"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <RelativeLayout

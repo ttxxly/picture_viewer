@@ -67,6 +67,14 @@ public class LoginActivity extends AppCompatActivity {
         et_nickname = (EditText) findViewById(R.id.et_login_nickname);
         et_password = (EditText) findViewById(R.id.et_login_password);
         btn_login = (Button) findViewById(R.id.btn_login);
+        TextView mLook = (TextView) findViewById(R.id.tv_login_look_around);
+        mLook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        });
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
