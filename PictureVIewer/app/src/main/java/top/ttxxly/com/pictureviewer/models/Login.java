@@ -11,15 +11,15 @@ package top.ttxxly.com.pictureviewer.models;
  */
 
 public class Login {
-    public String flat;
-    public String message;
-    public String nickname;
-    public String password;
-    public String mobile;
-    public String portrait;
-    public String nickname1;
-    public String password1;
-    public String mobile1;
+    public String flat;             //登录状态
+    public String message;          //登录信息
+    public String nickname;         //用户昵称
+    public String password;         //用户密码
+    public String mobile;           //用户手机
+    public String portrait;         //用户头像
+    public String nickname1;        //客户端上传的昵称，用于测试
+    public String password1;        //客户端上传的密码，用于测试
+    public String mobile1;          //客户端上传的手机号，用于测试
 
     public String getNickname1() {
         return nickname1;

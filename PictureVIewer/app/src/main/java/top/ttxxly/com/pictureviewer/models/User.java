@@ -5,9 +5,12 @@ package top.ttxxly.com.pictureviewer.models;
  */
 
 public class User {
-    private String nickname;
-    private String password;
-    private String mobile;
+
+
+    private long id;          //用户ID， 唯一不变量
+    private String nickname;    //用户昵称
+    private String password;    //用户密码
+    private String mobile;      //用户手机号
     private String portrait;    //头像
 
     public void init() {
@@ -15,6 +18,9 @@ public class User {
         this.password = null;
         this.mobile = null;
         this.portrait = null;
+    }
+    public long  getId() {
+        return id;
     }
     public void setNickname(String user) {
         this.nickname = user;

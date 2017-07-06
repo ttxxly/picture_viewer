@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import top.ttxxly.com.pictureviewer.Adapter.RecyclerViewAdapter;
 import top.ttxxly.com.pictureviewer.R;
+import top.ttxxly.com.pictureviewer.models.Category;
 
 public class CategoryFragment extends Fragment {
 
@@ -26,8 +26,11 @@ public class CategoryFragment extends Fragment {
         //找到RecyclerView控件
         RecyclerView home_rv = (RecyclerView) v.findViewById(R.id.RCV_category_recyclerView);
 
-        //做一些假数据
-        HashMap<String, String> dataList = new HashMap<>();
+        //Category类获取信息
+        List dataList = new ArrayList();
+        Category category = new Category();
+        category.set
+        dataList.add();
 
         //实例化Adapter并且给RecyclerView设上
         adapter = new RecyclerViewAdapter(dataList);

@@ -5,8 +5,8 @@ package top.ttxxly.com.pictureviewer.models;
  */
 
 public class Register {
-    public String flat;
-    public String message;
+    public String flat;         //返回的注册状态，是否注册成功
+    public String message;      //返回的注册信息
 
     public String getFlat() {
         return flat;

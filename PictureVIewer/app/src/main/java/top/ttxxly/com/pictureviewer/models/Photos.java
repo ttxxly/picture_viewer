@@ -5,11 +5,11 @@ package top.ttxxly.com.pictureviewer.models;
  */
 
 public class Photos {
-    private String title;
-    private String category;
-    private String keyword;
-    private String date;
-    private String description;
+    private String title;           //图片标题
+    private String category;        //分类
+    private String keyword;         //关键词
+    private String date;            //创建时期
+    private String description;     //图片描述
 
     public String getTitle() {
         return title;
