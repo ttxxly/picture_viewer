@@ -18,11 +18,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import top.ttxxly.com.pictureviewer.models.Register;
-import top.ttxxly.com.pictureviewer.models.Login;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
+import top.ttxxly.com.pictureviewer.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -41,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
                 case 1:
                     s = msg.obj.toString();
                     Log.i("S", s);
-                    Login value = new Gson().fromJson(s, Login.class);
+                    User value = new Gson().fromJson(s, User.class);
                     Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
                     SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
                     SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
@@ -122,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String data = StreamUtils.Stream2String(is);
 
                 Log.i("data", data);
-                Register value = new Gson().fromJson(data, Register.class);
+                User value = new Gson().fromJson(data, User.class);
                 String flat = value.getFlat();
                 String message = value.getMessage();
                 Message msg = new Message();

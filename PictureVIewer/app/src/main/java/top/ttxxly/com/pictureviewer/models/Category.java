@@ -2,23 +2,26 @@ package top.ttxxly.com.pictureviewer.models;
 
 /**
  * Created by ttxxly on 2017/7/6.
+ *
+ * 涉及的接口：
+ *     显示所有的分类接口
+ *     显示当前用户的分类接口
+ *     删除分类接口
+ *     修改分类接口
+ *     添加分类接口
  */
 
 public class Category {
+    private String flat;        //状态
+    private String message;     //信息
+    private long categoryid;    //该分类的id
+    private long userid;        //用户ID
+    private String datetime;    //创建日期
+
     private String title;       //分类名
-    private long id;            //用户ID
     private String description; //分类描述
     private String keywords;    //分类关键词
-    private String datetime;    //创建日期
     private String[] photos;    //该分类下的所有图片 URL
-
-    public String[] getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(String[] photos) {
-        this.photos = photos;
-    }
 
     public String getTitle() {
         return title;
@@ -26,14 +29,6 @@ public class Category {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getDescription() {
@@ -52,11 +47,31 @@ public class Category {
         this.keywords = keywords;
     }
 
-    public String getDatetime() {
-        return datetime;
+    public String[] getPhotos() {
+        return photos;
     }
 
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
+    public void setPhotos(String[] photos) {
+        this.photos = photos;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public long getCategoryid() {
+        return categoryid;
+    }
+
+    public long getUserid() {
+        return userid;
+    }
+
+    public String getDatetime() {
+        return datetime;
     }
 }
