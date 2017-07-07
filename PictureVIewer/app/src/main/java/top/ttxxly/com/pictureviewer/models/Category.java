@@ -14,8 +14,8 @@ package top.ttxxly.com.pictureviewer.models;
 public class Category {
     private String flat;        //状态
     private String message;     //信息
-    private long categoryid;    //该分类的id
-    private long userid;        //用户ID
+    private String categoryid;    //该分类的id
+    private String userid;        //用户ID
     private String datetime;    //创建日期
 
     private String title;       //分类名
@@ -63,11 +63,11 @@ public class Category {
         return message;
     }
 
-    public long getCategoryid() {
+    public String getCategoryid() {
         return categoryid;
     }
 
-    public long getUserid() {
+    public String getUserid() {
         return userid;
     }
 

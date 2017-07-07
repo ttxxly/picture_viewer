@@ -31,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mMobile;
     private Button mRegitser;
     private String s;
+    private String URL = "http://10.0.2.2/picture_viewer";
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -44,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                     User value = new Gson().fromJson(s, User.class);
                     Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
                     SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
+                    SharedPreferenceUtils.putString("loginId", value.getUserid(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginPassword", value.getPassword(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginMobile", value.getMobile(), getApplicationContext());
@@ -114,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
-            String url = "http://10.0.2.2/picture_viewer/register.php" + "?nickname=" + mNickname.getText().toString() + "&password=" + mPassword.getText().toString() + "&mobile=" + mMobile.getText().toString();
+            String url = URL + "/interface/register.php" + "?nickname=" + mNickname.getText().toString() + "&password=" + mPassword.getText().toString() + "&mobile=" + mMobile.getText().toString();
             Log.i("URl", url);
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
@@ -138,7 +141,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String flat = value.getFlat();
                 String message = value.getMessage();
                 Message msg = new Message();
-                Log.i("返回data", flat + "::" + message );
                 if (flat.equals("success")) {
                     Log.i("Status", "注册成功" );
                     msg.what = 1;

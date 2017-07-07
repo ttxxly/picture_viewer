@@ -12,10 +12,10 @@ package top.ttxxly.com.pictureviewer.models;
 public class Photos {
     private String flat;            //状态
     private String message;         //信息
-    private long photoid;           //该图片的唯一标识，用于图片修改，删除
+    private String photoid;           //该图片的唯一标识，用于图片修改，删除
     private String datetime;        //该图片的创建时间
-    private long categoryid;        //该图片所属的分类的id
-    private long userid;            //该图片所属的用户ID
+    private String categoryid;        //该图片所属的分类的id
+    private String userid;            //该图片所属的用户ID
     private String url;             //图片地址
 
     private String title;           //图片标题
@@ -54,7 +54,7 @@ public class Photos {
         return message;
     }
 
-    public long getPhotoid() {
+    public String getPhotoid() {
         return photoid;
     }
 
@@ -62,11 +62,11 @@ public class Photos {
         return datetime;
     }
 
-    public long getCategoryid() {
+    public String getCategoryid() {
         return categoryid;
     }
 
-    public long getUserid() {
+    public String getUserid() {
         return userid;
     }
 

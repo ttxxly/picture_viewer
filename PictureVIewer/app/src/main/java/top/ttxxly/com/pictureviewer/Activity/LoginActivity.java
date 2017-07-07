@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_login;
     private TextView tv_register;
     private String s;   //保存返回的 JSON 数据
-    final public String URL = "http://10.0.2.2/picture_viewer";
+    private String URL = "http://10.0.2.2/picture_viewer";
 
     private Handler handler = new Handler(){
         @Override
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                     User value = new Gson().fromJson(s, User.class);
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
                     SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
+                    SharedPreferenceUtils.putString("loginId", value.getUserid(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginPassword", value.getPassword(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginMobile", value.getMobile(), getApplicationContext());
@@ -135,8 +136,8 @@ public class LoginActivity extends AppCompatActivity {
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
             conn = (HttpURLConnection) mURL.openConnection();
             conn.setRequestMethod("GET");// 设置请求方法为post
-            conn.setReadTimeout(5000);// 设置读取超时为5秒
-            conn.setConnectTimeout(10000);// 设置连接网络超时为10秒
+            conn.setReadTimeout(3000);// 设置读取超时为1秒
+            conn.setConnectTimeout(3000);// 设置连接网络超时为1秒
             conn.setDoOutput(true);// 设置此方法,允许向服务器输出内容
             conn.setRequestProperty("User-Agent", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -149,19 +150,11 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("data", data);
                 User value = new Gson().fromJson(data, User.class);
                 String flat = value.getFlat();
-                String message = value.getMessage();
-                long userid = value.getUserid();
-                String nickname = value.getNickname();
-                String password = value.getPassword();
-                String mobile = value.getMobile();
-                String portrait = value.getPortrait();
                 Message msg = new Message();
-                Log.i("返回data", flat + "::" + message + "::" + userid + "::" + nickname + "::" + password + "::" + mobile + "::" + portrait);
                 if (flat.equals("success")) {
                     Log.i("Status", "登录成功，3秒后跳转。。。" );
                     msg.what = 1;
                     msg.obj = data;
-
                 }else {
                     msg.what = -1;
                 }
@@ -172,6 +165,7 @@ public class LoginActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.i("访问失败1", "无法连接服务器");
         } finally {
             if (conn != null) {
                 conn.disconnect();// 关闭连接

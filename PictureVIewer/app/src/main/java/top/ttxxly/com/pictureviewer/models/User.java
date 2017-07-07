@@ -12,7 +12,7 @@ package top.ttxxly.com.pictureviewer.models;
 public class User {
     private String flat;             //状态
     private String message;          //信息
-    private long userid;             //用户ID， 唯一不变量
+    private String userid;             //用户ID， 唯一不变量
 
     private String nickname;         //用户昵称
     private String password;         //用户密码
@@ -59,7 +59,7 @@ public class User {
         return message;
     }
 
-    public long getUserid() {
+    public String getUserid() {
         return userid;
     }
 }
