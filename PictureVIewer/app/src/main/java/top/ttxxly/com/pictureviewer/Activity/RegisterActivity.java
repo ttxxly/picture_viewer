@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +26,10 @@ import top.ttxxly.com.pictureviewer.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText nickname;
-    private EditText password;
-    private EditText mobile;
-    private Button regitser;
+    private EditText mNickname;
+    private EditText mPassword;
+    private EditText mMobile;
+    private Button mRegitser;
     private String s;
     private Handler handler = new Handler(){
         @Override
@@ -62,10 +63,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        nickname = (EditText) findViewById(R.id.et_register_nickname);
-        password = (EditText) findViewById(R.id.et_register_password);
-        mobile = (EditText) findViewById(R.id.et_register_mobile);
-        regitser = (Button) findViewById(R.id.btn_register_register);
+        mNickname = (EditText) findViewById(R.id.et_register_nickname);
+        mPassword = (EditText) findViewById(R.id.et_register_password);
+        mMobile = (EditText) findViewById(R.id.et_register_mobile);
+        mRegitser = (Button) findViewById(R.id.btn_register_register);
         ImageView mReturn = (ImageView) findViewById(R.id.img_register_return_top);
         mReturn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +75,22 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
-        regitser.setOnClickListener(new View.OnClickListener() {
+        mRegitser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
+                String nickname = mNickname.getText().toString();
+                String password = mPassword.getText().toString();
+                String mobile = mMobile.getText().toString();
+
+                if (TextUtils.isEmpty(nickname)) {
+                    Toast.makeText(RegisterActivity.this, "用户名不能为空", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(mobile)) {
+                    Toast.makeText(RegisterActivity.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(RegisterActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
+                }else {
+                    register();
+                }
             }
         });
     }
@@ -101,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
-            String url = "http://10.0.2.2/picture_viewer/register.php" + "?nickname=" + nickname.getText().toString() + "&password=" + password.getText().toString() + "&mobile=" + mobile.getText().toString();
+            String url = "http://10.0.2.2/picture_viewer/register.php" + "?nickname=" + mNickname.getText().toString() + "&password=" + mPassword.getText().toString() + "&mobile=" + mMobile.getText().toString();
             Log.i("URl", url);
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象

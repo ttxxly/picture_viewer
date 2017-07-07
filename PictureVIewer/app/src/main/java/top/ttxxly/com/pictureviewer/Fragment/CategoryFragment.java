@@ -29,8 +29,6 @@ public class CategoryFragment extends Fragment {
         //Category类获取信息
         List dataList = new ArrayList();
         Category category = new Category();
-        category.set
-        dataList.add();
 
         //实例化Adapter并且给RecyclerView设上
         adapter = new RecyclerViewAdapter(dataList);
