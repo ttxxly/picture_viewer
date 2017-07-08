@@ -23,25 +23,32 @@ $row1 = mysql_fetch_row($result1);
 $result2 = mysql_query($sqlb);
 $row2 = mysql_fetch_row($result2);
 if (!$row1 && !$row2) {
-    $sql = "INSERT INTO `user` (`nickname`, `password`, `mobile`, `portrait`) VALUES('$nickname','$password','$mobile','/photos/portrait/1.jpg')";
-    $result = mysql_query($sql);
-    $id = mysql_insert_id($conn);
-    if ($result) {
-        $arr = array(
-            'flat' => 'success',
-            'message' => '注册成功',
-            'userid' => $id,
-            'nickname' => $nickname,
-            'password' => $password,
-            'mobile' => $mobile,
-            'portrait' => '/photos/portrait/1.jpg'
-        );
-    } else {
-        $arr = array(
-            'flat' => 'fail',
-            'message' => '数据库错误'
-        );
-    }
+		if ($nickname && $mobile) {
+			$sql = "INSERT INTO `user` (`nickname`, `password`, `mobile`, `portrait`) VALUES('$nickname','$password','$mobile','/photos/portrait/1.jpg')";
+	    $result = mysql_query($sql);
+	    $id = mysql_insert_id($conn);
+	    if ($result) {
+	        $arr = array(
+	            'flat' => 'success',
+	            'message' => '注册成功',
+	            'userid' => $id,
+	            'nickname' => $nickname,
+	            'password' => $password,
+	            'mobile' => $mobile,
+	            'portrait' => '/photos/portrait/1.jpg'
+	        );
+	    } else {
+	        $arr = array(
+	            'flat' => 'fail',
+	            'message' => '数据库错误'
+	        );
+	    }
+		}else {
+			$arr = array(
+        'flat' => 'fail',
+        'message' => '手机号或者账户名为空'
+    );
+		}
 } else {
     $arr = array(
         'flat' => 'fail',

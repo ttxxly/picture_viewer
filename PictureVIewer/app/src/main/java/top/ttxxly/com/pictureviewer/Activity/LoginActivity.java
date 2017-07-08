@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginPassword", value.getPassword(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginMobile", value.getMobile(), getApplicationContext());
+                    SharedPreferenceUtils.putString("loginPortrait", value.getPortrait(), getApplicationContext());
 
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();

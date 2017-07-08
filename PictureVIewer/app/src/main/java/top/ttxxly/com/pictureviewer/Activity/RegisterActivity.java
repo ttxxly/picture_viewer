@@ -1,5 +1,6 @@
 package top.ttxxly.com.pictureviewer.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,30 +33,29 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mRegitser;
     private String s;
     private String URL = "http://10.0.2.2/picture_viewer";
+    private Context mContext;
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
-
+            s = msg.obj.toString();
+            Log.i("S", s);
+            User value = new Gson().fromJson(s, User.class);
             switch (msg.what) {
                 case 1:
-                    s = msg.obj.toString();
-                    Log.i("S", s);
-                    User value = new Gson().fromJson(s, User.class);
-                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "注册成功", Toast.LENGTH_SHORT).show();
                     SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
                     SharedPreferenceUtils.putString("loginId", value.getUserid(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginPassword", value.getPassword(), getApplicationContext());
                     SharedPreferenceUtils.putString("loginMobile", value.getMobile(), getApplicationContext());
-
+                    SharedPreferenceUtils.putString("loginPortrait", value.getPortrait(), getApplicationContext());
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                     break;
                 case -1:
-                    Toast.makeText(getApplicationContext(), "用户名或手机号已被注册", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, value.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -66,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        mContext = RegisterActivity.this;
         mNickname = (EditText) findViewById(R.id.et_register_nickname);
         mPassword = (EditText) findViewById(R.id.et_register_password);
         mMobile = (EditText) findViewById(R.id.et_register_mobile);
@@ -139,7 +140,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.i("data", data);
                 User value = new Gson().fromJson(data, User.class);
                 String flat = value.getFlat();
-                String message = value.getMessage();
                 Message msg = new Message();
                 if (flat.equals("success")) {
                     Log.i("Status", "注册成功" );
@@ -148,6 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }else {
                     msg.what = -1;
+                    msg.obj = data;
                 }
                 handler.sendMessage(msg);
             } else {
