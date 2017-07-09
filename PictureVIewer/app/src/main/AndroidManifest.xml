@@ -27,7 +27,8 @@
         <activity android:name=".Activity.EditInfo1Activity" />
         <activity android:name=".Activity.EditInfo2Activity" />
         <activity android:name=".Activity.EditInfo2Step2Activity" />
-        <activity android:name=".Activity.SearchActivity"/>
+        <activity android:name=".Activity.SearchActivity" />
+        <activity android:name=".Activity.EditPortraitActivity"></activity>
     </application>
 
 </manifest>

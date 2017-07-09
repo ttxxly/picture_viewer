@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_login;
     private TextView tv_register;
     private String s;   //保存返回的 JSON 数据
-    private String URL = "http://10.0.2.2/picture_viewer";
+    private String Url = "http://10.0.2.2/picture_viewer";
 
     private Handler handler = new Handler(){
         @Override
@@ -45,12 +45,12 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("S", s);
                     User value = new Gson().fromJson(s, User.class);
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                    SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
-                    SharedPreferenceUtils.putString("loginId", value.getUserid(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginPassword", value.getPassword(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginMobile", value.getMobile(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginPortrait", value.getPortrait(), getApplicationContext());
+                    SharedPreferenceUtils.putBoolean("UserStatus", true, getApplicationContext());
+                    SharedPreferenceUtils.putString("UserId", value.getUserid(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserNickname", value.getNickname(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserPassword", value.getPassword(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserMobile", value.getMobile(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserPortrait", value.getPortrait(), getApplicationContext());
 
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
-            String url = URL + "/interface/login.php" + "?nickname=" + user.getNickname() + "&password=" + user.getPassword() + "&mobile=" + user.getMobile();
+            String url = Url + "/interface/login.php" + "?nickname=" + user.getNickname() + "&password=" + user.getPassword() + "&mobile=" + user.getMobile();
             Log.i("URl", url);
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象

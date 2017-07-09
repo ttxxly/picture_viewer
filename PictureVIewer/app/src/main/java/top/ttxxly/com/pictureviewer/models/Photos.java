@@ -1,76 +1,46 @@
 package top.ttxxly.com.pictureviewer.models;
 
+import java.util.Map;
+import java.util.Objects;
+
 /**
- * Created by ttxxly on 2017/7/1.
- * 涉及的接口：
- *      图片详细信息修改接口
- *      图片详细信息显示接口
- *      图片删除接口
- *      图片添加接口
+ * Created by ttxxly on 2017/7/9.
  */
 
 public class Photos {
-    private String flat;            //状态
-    private String message;         //信息
-    private String photoid;           //该图片的唯一标识，用于图片修改，删除
-    private String datetime;        //该图片的创建时间
-    private String categoryid;        //该图片所属的分类的id
-    private String userid;            //该图片所属的用户ID
-    private String url;             //图片地址
 
-    private String title;           //图片标题
-    private String keyword;         //关键词
-    private String description;     //图片描述
 
-    public String getTitle() {
-        return title;
+    private String count;
+    private String flat;
+    private String message;
+    private Map<String,Objects> photo;
+
+    public Map<String, Objects> getPhoto() {
+        return photo;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getCount() {
+        return count;
     }
 
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCount(String count) {
+        this.count = count;
     }
 
     public String getFlat() {
         return flat;
     }
 
+    public void setFlat(String flat) {
+        this.flat = flat;
+    }
+
     public String getMessage() {
         return message;
     }
 
-    public String getPhotoid() {
-        return photoid;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getDatetime() {
-        return datetime;
-    }
-
-    public String getCategoryid() {
-        return categoryid;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public String getUrl() {
-        return url;
-    }
 }

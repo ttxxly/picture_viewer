@@ -45,12 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     Toast.makeText(mContext, "注册成功", Toast.LENGTH_SHORT).show();
-                    SharedPreferenceUtils.putBoolean("loginInfo", true, getApplicationContext());
-                    SharedPreferenceUtils.putString("loginId", value.getUserid(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginNickname", value.getNickname(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginPassword", value.getPassword(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginMobile", value.getMobile(), getApplicationContext());
-                    SharedPreferenceUtils.putString("loginPortrait", value.getPortrait(), getApplicationContext());
+                    SharedPreferenceUtils.putBoolean("UserStatus", true, getApplicationContext());
+                    SharedPreferenceUtils.putString("UserId", value.getUserid(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserNickname", value.getNickname(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserPassword", value.getPassword(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserMobile", value.getMobile(), getApplicationContext());
+                    SharedPreferenceUtils.putString("UserPortrait", value.getPortrait(), getApplicationContext());
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                     break;
