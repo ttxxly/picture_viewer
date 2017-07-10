@@ -13,9 +13,10 @@ import com.google.gson.Gson;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
+import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
@@ -24,6 +25,7 @@ import top.ttxxly.com.pictureviewer.models.Photos;
 public class EditPortraitActivity extends AppCompatActivity {
 
     private String Url = "http://10.0.2.2/picture_viewer";
+    private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
 
     private Handler handler = new Handler() {
         @Override
@@ -31,6 +33,11 @@ public class EditPortraitActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
+                    Photos data = new Gson().fromJson(msg.obj.toString(), Photos.class);
+                    photos = data.getPhotos();
+                    GridView mPortrait = (GridView) findViewById(R.id.GV_edit_portrait);
+                    mPortrait.setAdapter(new GlideAdapter(photos));
+                    Toast.makeText(getApplicationContext(), "头像请求成功", Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
                     Toast.makeText(getApplicationContext(), "请求失败", Toast.LENGTH_SHORT).show();
@@ -45,9 +52,6 @@ public class EditPortraitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_portrait);
 
         StartRequestFromPHP();
-
-        GridView mPortrait = (GridView) findViewById(R.id.GV_edit_portrait);
-        //mPortrait.setAdapter(new GlideAdapter());
     }
 
 
@@ -92,20 +96,13 @@ public class EditPortraitActivity extends AppCompatActivity {
                 Log.i("data", data);
                 Photos value = new Gson().fromJson(data, Photos.class);
 
-                Map<String, Objects> photo = value.getPhoto();
-                if(!photo.isEmpty()) {
-                    for (String key:photo.keySet()){                        //遍历取出key，再遍历map取出value。
-                        System.out.println("key:"+key);
-                        System.out.println(photo.get(key).toString());
-                    }
-                }
                 String flat = value.getFlat();
                 Message msg = new Message();
                 if (flat.equals("success")) {
-                    Log.i("Status", "修改用户信息请求成功！！！" );
+                    Log.i("Status", "修改用户信息请求成功！！！");
                     msg.what = 1;
                     msg.obj = data;
-                }else {
+                } else {
                     msg.what = -1;
                 }
                 handler.sendMessage(msg);
