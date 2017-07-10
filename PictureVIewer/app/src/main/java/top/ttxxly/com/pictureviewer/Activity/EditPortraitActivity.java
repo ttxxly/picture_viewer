@@ -1,11 +1,15 @@
 package top.ttxxly.com.pictureviewer.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -23,7 +27,7 @@ import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.Photos;
 
 public class EditPortraitActivity extends AppCompatActivity {
-
+    final int EDIT_PORTRAIT_CODE = 1;    //修改 portrait
     private String Url = "http://10.0.2.2/picture_viewer";
     private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
 
@@ -37,6 +41,18 @@ public class EditPortraitActivity extends AppCompatActivity {
                     photos = data.getPhotos();
                     GridView mPortrait = (GridView) findViewById(R.id.GV_edit_portrait);
                     mPortrait.setAdapter(new GlideAdapter(photos));
+                    mPortrait.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            SharedPreferenceUtils.putString("UserPortrait", photos.get(position).getUrl(), getApplicationContext());
+                            Intent intent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("url", photos.get(position).getUrl());
+                            intent.putExtras(bundle);
+                            setResult(EDIT_PORTRAIT_CODE, intent);
+                            finish();
+                        }
+                    });
                     Toast.makeText(getApplicationContext(), "头像请求成功", Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
@@ -52,6 +68,14 @@ public class EditPortraitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_portrait);
 
         StartRequestFromPHP();
+        ImageView mReturn = (ImageView) findViewById(R.id.img_edit_portrait_return_top);
+        mReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
 

@@ -45,6 +45,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
     private TextView id;
     private Intent intent;
     private String URL = "http://10.0.2.2/picture_viewer";
+    private Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +92,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.RL_fragment_people_portrait:
                 Toast.makeText(mContext, "修改头像", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(), EditPortraitActivity.class));
+                startActivityForResult(new Intent(getContext(), EditPortraitActivity.class), EDIT_PORTRAIT_CODE);
                 break;
             case R.id.RL_fragment_people_nickname:
                 Toast.makeText(mContext, "修改昵称", Toast.LENGTH_SHORT).show();
@@ -129,10 +130,16 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
             case NO_RESULT_CODE:
                 break;
             case EDIT_NICKNAME_CODE:
-                Bundle bundle = data.getExtras();
+                bundle = data.getExtras();
                 String content = bundle.getString("content");
                 Log.i("content", content);
                 nickname.setText(content);
+                break;
+            case EDIT_PORTRAIT_CODE:
+                bundle = data.getExtras();
+                String url = bundle.getString("url");
+                Log.i("url", url);
+                Glide.with(getContext()).load(URL + url).centerCrop().into(portrait);
                 break;
         }
     }
