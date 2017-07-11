@@ -1,6 +1,6 @@
 
 <?php
-//链接数据库
+//链接数据库///qwq
 require dirname(__FILE__).'/conn.php';//转换成硬路径，速度更快
 //$username=$_REQUEST['username'];
 //$message=$_REQUEST['message'];
