@@ -37,8 +37,11 @@ else{
         'message'=>'插入图片分类失败'
     );
 }
-$strr=json_encode($arr);
-echo($strr);
+foreach ($arr as $key => $value) {
+    $arr[$key] = urlencode($value);
+}
+//返给客户端 JSON 数据
+echo urldecode(json_encode($arr));
 
 //关闭数据库链接  打开的非持久链接会在脚本执行完自动关闭，所以不需要使用mysql_close();
 

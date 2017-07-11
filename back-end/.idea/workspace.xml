@@ -22,14 +22,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="112233.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/112233.php">
+      <file leaf-file-name="add_category.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/add_category.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0490524">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding>
                 <marker date="1499748508507" expanded="true" signature="1257:1425" placeholder="insert into ..." />
+=======
+            <state vertical-scroll-proportion="-19.870968">
+              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+              <folding>
+                <marker date="1499758562336" expanded="true" signature="488:622" placeholder="INSERT INTO ..." />
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="selectpic.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/selectpic.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-22.0">
+              <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+              <folding>
+                <marker date="1499759973540" expanded="true" signature="257:325" placeholder="select * fro..photograph..." />
+                <marker date="1499759973540" expanded="true" signature="349:400" placeholder="select * fro..photograph..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/login.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.2502732">
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="58" selection-end-column="12" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -41,13 +71,13 @@
       <list>
         <option value="$PROJECT_DIR$/login.php" />
         <option value="$PROJECT_DIR$/register.php" />
-        <option value="$PROJECT_DIR$/selectpic.php" />
         <option value="$PROJECT_DIR$/update_category.php" />
         <option value="$PROJECT_DIR$/update_user.php" />
         <option value="$PROJECT_DIR$/delete_category.php" />
-        <option value="$PROJECT_DIR$/add_category.php" />
         <option value="$PROJECT_DIR$/add_photograph.php" />
         <option value="$PROJECT_DIR$/112233.php" />
+        <option value="$PROJECT_DIR$/add_category.php" />
+        <option value="$PROJECT_DIR$/selectpic.php" />
       </list>
     </option>
   </component>
@@ -208,7 +238,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+<<<<<<< HEAD
             <marker date="1499748508507" expanded="true" signature="1257:1425" placeholder="insert into ..." />
+=======
+            <marker date="1499759973540" expanded="true" signature="257:325" placeholder="select * fro..photograph..." />
+            <marker date="1499759973540" expanded="true" signature="349:400" placeholder="select * fro..photograph..." />
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
           </folding>
         </state>
       </provider>
@@ -231,6 +266,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -238,6 +274,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -262,48 +299,105 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/add_category.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.548387">
           <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login.php">
+=======
+    <entry file="file://G:/www/xiao/login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.741936">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="58" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/selectpic.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75956285">
-          <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.2644809">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="66" />
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/update_category.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="-16.741936">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="58" selection-end-column="12" />
+=======
         <state vertical-scroll-proportion="0.6251366">
           <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+          <folding>
+            <marker date="1499739719261" expanded="true" signature="-1:-1" placeholder="update categ..." />
+          </folding>
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/112233.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
+=======
+        <state vertical-scroll-proportion="0.5431694">
+          <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+          <folding>
+            <marker date="1499748254563" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+          </folding>
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register.php">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.75956285">
+          <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
+=======
+        <state vertical-scroll-proportion="-12.774194">
+          <caret line="44" column="25" selection-start-line="44" selection-start-column="25" selection-end-line="44" selection-end-column="25" />
+          <folding>
+            <marker date="1499739696508" expanded="true" signature="-1:-1" placeholder="select * fro..user..." />
+            <marker date="1499739696508" expanded="true" signature="-1:-1" placeholder="select * fro..user..." />
+            <marker date="1499739696508" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+          </folding>
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/add_category.php">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.6251366">
+          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+=======
+        <state vertical-scroll-proportion="-19.870968">
+          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding>
+            <marker date="1499758562336" expanded="true" signature="488:622" placeholder="INSERT INTO ..." />
+          </folding>
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/selectpic.php">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0490524">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding>
             <marker date="1499748508507" expanded="true" signature="1257:1425" placeholder="insert into ..." />
+=======
+        <state vertical-scroll-proportion="-22.0">
+          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+          <folding>
+            <marker date="1499759973540" expanded="true" signature="257:325" placeholder="select * fro..photograph..." />
+            <marker date="1499759973540" expanded="true" signature="349:400" placeholder="select * fro..photograph..." />
+>>>>>>> f0d9ca16da8d4cbf0bd8d8f04585f67461aa7393
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2502732">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="58" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>

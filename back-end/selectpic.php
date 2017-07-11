@@ -10,11 +10,16 @@
 //链接数据库
 require dirname(__FILE__).'/conn.php';//转换成硬路径，速度更快
 
-$userid = @$_GET['userid'];
-$keys=@$_GET['keys'];
+$userid ="33";// @$_GET['userid'];
+$keys="";//@$_GET['keys'];
 
 $i = '0';
-$sql = "select * from photograph where keywords='$keys' and userid='$userid' ";
+if(!empty($keys)) {
+    $sql = "select * from photograph where keywords='$keys' and userid='$userid' ";
+}
+else{
+    $sql = "select * from photograph where and userid='$userid' ";
+}
 $result = mysql_query($sql);
 if ($result && $keys && $userid) {
     $arr = array(
@@ -30,7 +35,7 @@ if ($result && $keys && $userid) {
             'keyword' => $row->keywords,
             'description' => $row->description,
             'url' => $row->image,
-            'datetime' => $row->datetime,
+            'datetime' => $row->datetime
         );
         $i++;
     }
@@ -39,9 +44,10 @@ if ($result && $keys && $userid) {
     $arr = array(
         'flat' => 'fail',
         'message' => '没有搜到相关信息',
-        'count' => $i,
+        'count' => $i
     );
 }
+
 $arr['flat'] = urlencode($arr['flat']);
 $arr['message'] = urlencode($arr['message']);
 $arr['count'] = urlencode($arr['count']);
