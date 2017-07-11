@@ -78,6 +78,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageView mSearch;
     private TextView mDescription;
 
+    private String title = "";
+    private String keywords = "";
+    private String description = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +135,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     case 1:
                         resetBottomBar();
                         mCategory.setTextColor(Color.parseColor("#227700"));
-                        mDescription.setText("分类");
+                        mDescription.setText("我的分类");
                         break;
                     case 2:
                         resetBottomBar();
@@ -247,6 +251,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     setPicToView(data);
                 }
                 break;
+            case REQUESTCODE_UPLOAD:    //上传图片
+                Bundle bundle = data.getExtras();
+                title = bundle.getString("title");
+                keywords = bundle.getString("keywords");
+                description = bundle.getString("description");
+                // 新线程后台上传服务端
+                pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
+                new Thread(uploadImageRunnable).start();
+                break;
         }
     }
 
@@ -275,7 +288,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      */
     private void setPicToView(Intent picdata) {
         Bundle extras = picdata.getExtras();
-
         if (extras != null) {
             Log.i("裁剪图片", "成功");
             // 取得SDCard图片路径做显示
@@ -289,10 +301,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             Intent intent = new Intent(getApplicationContext(), UploadActivity.class);
             intent.putExtra("url", urlpath);
             startActivityForResult(intent, REQUESTCODE_UPLOAD);
-
-            // 新线程后台上传服务端
-            pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
-            new Thread(uploadImageRunnable).start();
         }else {
             Log.i("裁剪图片", "失败");
         }
@@ -322,6 +330,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 // 要上传的图片文件
                 File file = new File(urlpath);
                 fileparams.put("myfile", file);
+                textParams.put("title", title);
+                textParams.put("keywords", keywords);
+                textParams.put("description", description);
+                textParams.put("", description);
+
                 // 利用HttpURLConnection对象从网络中获取网页数据
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 // 设置连接超时（记得设置连接超时,如果网络不好,Android系统在超过默认时间会收回资源中断操作）

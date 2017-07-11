@@ -1,6 +1,8 @@
 package top.ttxxly.com.pictureviewer.Fragment;
 
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.ttxxly.com.pictureviewer.Activity.DetailsPhotosActivity;
 import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
@@ -33,6 +36,7 @@ import static top.ttxxly.com.pictureviewer.Activity.MainActivity.mContext;
 public class MyPhotoFragment extends Fragment {
 
     private String Url = "http://10.0.2.2/picture_viewer";
+    private static ProgressDialog pd;// 等待进度圈
     private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
 
     private Handler handler = new Handler() {
@@ -41,8 +45,10 @@ public class MyPhotoFragment extends Fragment {
             super.handleMessage(msg);
             Photos data = new Gson().fromJson(msg.obj.toString(), Photos.class);
             photos = data.getPhotos();
+            pd.dismiss();
             switch (msg.what) {
                 case 1:
+                    gv_my_photo.setAdapter(new GlideAdapter(photos));
                     Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
@@ -51,18 +57,22 @@ public class MyPhotoFragment extends Fragment {
             }
         }
     };
+    private GridView gv_my_photo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_photo, container, false);
+        pd = ProgressDialog.show(mContext, null, "加载中，请稍候...");
         StartRequestFromPHP();
-        GridView gv_my_photo = (GridView) view.findViewById(R.id.gv_my_photo);
-        gv_my_photo.setAdapter(new GlideAdapter(photos));
+        gv_my_photo = (GridView) view.findViewById(R.id.gv_my_photo);
+
         gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(getContext(), DetailsPhotosActivity.class);
+                intent.putExtra("photos_data", photos.get(position));
+                startActivity(intent);
             }
         });
 
@@ -115,7 +125,7 @@ public class MyPhotoFragment extends Fragment {
                 String flat = value.getFlat();
                 Message msg = new Message();
                 if (flat.equals("success")) {
-                    Log.i("Status", "修改用户信息请求成功！！！");
+                    Log.i("Status", "请求我的图片成功！！！");
                     msg.what = 1;
                     msg.obj = data;
                 } else {

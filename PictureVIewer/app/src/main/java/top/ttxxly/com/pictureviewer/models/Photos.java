@@ -1,12 +1,13 @@
 package top.ttxxly.com.pictureviewer.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by ttxxly on 2017/7/9.
  */
 
-public class Photos {
+public class Photos implements Serializable{
 
     /**
      * count : 2
@@ -52,7 +53,7 @@ public class Photos {
         this.photos = photos;
     }
 
-    public static class PhotosBean {
+    public static class PhotosBean  implements  Serializable{
         /**
          * categoryid : 1
          * datetime : 2017-07-09 18:02:26

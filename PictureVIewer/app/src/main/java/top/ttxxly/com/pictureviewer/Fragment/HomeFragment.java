@@ -29,7 +29,6 @@ import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.Photos;
 
-import static android.R.attr.data;
 import static top.ttxxly.com.pictureviewer.Activity.MainActivity.mContext;
 
 
@@ -48,6 +47,7 @@ public class HomeFragment extends Fragment {
             pd.dismiss();
             switch (msg.what) {
                 case 1:
+                    gv_my_photo.setAdapter(new GlideAdapter(photos));
                     break;
                 case -1:
                     Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
             }
         }
     };
+    private GridView gv_my_photo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,14 +64,13 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         pd = ProgressDialog.show(mContext, null, "加载中，请稍候...");
         StartRequestFromPHP();
-        GridView gv_my_photo = (GridView) view.findViewById(R.id.gv_home);
-        gv_my_photo.setAdapter(new GlideAdapter(photos));
+        gv_my_photo = (GridView) view.findViewById(R.id.gv_home);
         gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "点击了"+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), DetailsPhotosActivity.class);
-                intent.putExtra("data", data);
+                intent.putExtra("photos_data", photos.get(position));
                 startActivity(intent);
             }
         });
