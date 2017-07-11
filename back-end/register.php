@@ -7,14 +7,12 @@
  */
 
 //链接数据库
-$conn = mysql_connect("localhost", "root", "") or die("数据库连接错误" . mysql_error());
-mysql_select_db("photograph", $conn) or die("数据库访问错误" . mysql_error());
-mysql_query("SET NAMES UTF8");
+require dirname(__FILE__).'/conn.php';//转换成硬路径，速度更快
 
 //注册
-$nickname = @$_GET['nickname'];
-$password = @$_GET['password'];
-$mobile = @$_GET['mobile'];
+$nickname =@$_GET['nickname'];
+$password =@$_GET['password'];
+$mobile =@$_GET['mobile'];
 
 $sqla = "select * from user where nickname='$nickname'";
 $sqlb = "select * from user where mobile='$mobile'";
