@@ -6,13 +6,11 @@
  * Time: 14:10
  */
 //链接数据库
-$conn=mysql_connect("localhost","root","") or die("数据库连接错误".mysql_error());
-mysql_select_db("photograph",$conn) or die("数据库访问错误".mysql_error());
-mysql_query("SET NAMES UTF8");
+require dirname(__FILE__).'/conn.php';//转换成硬路径，速度更快
 
 //登陆
 //$nickname =@$_GET['nickname'];
-$password ='mm';
+$password ='qq';
 $mobile ='666';
 
 if (empty($nickname)) {

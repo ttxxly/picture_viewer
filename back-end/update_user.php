@@ -7,9 +7,7 @@
  */
 
 //链接数据库
-$conn=mysql_connect("localhost","root","") or die("数据库连接错误".mysql_error());
-mysql_select_db("photograph",$conn) or die("数据库访问错误".mysql_error());
-mysql_query("SET NAMES UTF8");
+require dirname(__FILE__).'/conn.php';//转换成硬路径，速度更快
 
 //接收数据
 $userid='1';//@$_GET['userid'];
