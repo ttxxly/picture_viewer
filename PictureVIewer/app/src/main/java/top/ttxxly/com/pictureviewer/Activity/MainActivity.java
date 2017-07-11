@@ -202,7 +202,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                 break;
             case R.id.img_add_category: //添加分类页面
-
+                startActivity(new Intent(getApplicationContext(), AddCategoryActivity.class));
                 break;
         }
     }

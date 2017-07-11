@@ -56,7 +56,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         }else {
             //其他条目中的逻辑在此
             ((BodyViewHolder) viewHolder).getTextView().setText(dataList.get(position - 1));
-            ((BodyViewHolder) viewHolder).getTextView().set
         }
     }
 
