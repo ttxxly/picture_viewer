@@ -9,10 +9,6 @@ $user_path=$_SERVER['DOCUMENT_ROOT']."picture_viewer/back-end/pictrue/";  //上�
 //$user_path=iconv("utf-8", "gb2312", $user_path);
 $fileadd=$user_path."/".$_FILES['myfile']['name'];  //上传文件保存后的地址
 //var_dump($_FILES['myfile']);
-<<<<<<< HEAD
-//echo "./upload".$_FILES['myfile']['name'];
-=======
->>>>>>> bfdf0fb5d059c03be8834e97fabcdc60fc07fe72
 //echo "<br/>";
 if(is_uploaded_file($file)){
     if(!file_exists($user_path)){
