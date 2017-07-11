@@ -3,7 +3,6 @@ package top.ttxxly.com.pictureviewer.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -25,16 +24,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +63,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private AddPhotosPopupWindow menuWindow;
 
     // 上传服务器的路径【一般不硬编码到程序中】
-    private String imgUrl = "";
+    private String imgUrl = "http://10.0.2.2/picture_viewer/interface/upload_pictures.php";
 
     private static final int REQUESTCODE_PICK = 0;		// 相册选图标记
     private static final int REQUESTCODE_TAKE = 1;		// 相机拍照标记
@@ -282,7 +280,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             // 取得SDCard图片路径做显示
             Bitmap photo = extras.getParcelable("data");
             Drawable drawable = new BitmapDrawable(null, photo);
-            urlpath = FileUtil.saveFile(MainActivity.this, "temphead.jpg", photo);
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+            urlpath = FileUtil.saveFile(MainActivity.this, df.format(new Date())+".jpg", photo);
+            Log.i("图片名称", df.format(new Date())+".jpg");
             //avatarImg.setImageDrawable(drawable);
 
             // 新线程后台上传服务端
@@ -317,7 +317,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 fileparams = new HashMap<String, File>();
                 // 要上传的图片文件
                 File file = new File(urlpath);
-                fileparams.put("image", file);
+                fileparams.put("myfile", file);
                 // 利用HttpURLConnection对象从网络中获取网页数据
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 // 设置连接超时（记得设置连接超时,如果网络不好,Android系统在超过默认时间会收回资源中断操作）
@@ -364,28 +364,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             switch (msg.what) {
                 case 0:
                     pd.dismiss();
-
-                    try {
-                        // 返回数据示例，根据需求和后台数据灵活处理
-                        // {"status":"1","statusMessage":"上传成功","imageUrl":"http://120.24.219.49/726287_temphead.jpg"}
-                        JSONObject jsonObject = new JSONObject(resultStr);
-
-                        // 服务端以字符串“1”作为操作成功标记
-                        if (jsonObject.optString("status").equals("1")) {
-                            BitmapFactory.Options option = new BitmapFactory.Options();
-                            // 压缩图片:表示缩略图大小为原始图片大小的几分之一，1为原图，3为三分之一
-                            option.inSampleSize = 1;
-
-                            // 服务端返回的JsonObject对象中提取到图片的网络URL路径
-                            String imageUrl = jsonObject.optString("imageUrl");
-                            Toast.makeText(MainActivity.this, imageUrl, Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(MainActivity.this, jsonObject.optString("statusMessage"), Toast.LENGTH_SHORT).show();
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    Log.i("上传返回信息", resultStr);
+                    Toast.makeText(MainActivity.this, "我上传l", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;

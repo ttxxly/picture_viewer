@@ -30,7 +30,6 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
     final int EDIT_PORTRAIT_CODE = 1;    //修改 portrait
     final int EDIT_NICKNAME_CODE = 2;    //修改nickname
     final int EDIT_MOBILE_CODE = 3;    //修改 mobile
-    final int EDIT_PASSWORD_CODE = 4;    //修改 password
     final int NO_RESULT_CODE = 0;       //直接返回不做任何的修改
 
     private RelativeLayout rl_portrait;
@@ -46,6 +45,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
     private Intent intent;
     private String URL = "http://10.0.2.2/picture_viewer";
     private Bundle bundle;
+    private String content;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,7 +112,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
             case R.id.RL_fragment_people_editPassword:
                 Toast.makeText(mContext, "修改密码", Toast.LENGTH_SHORT).show();
                 intent = new Intent(getContext(), EditInfo2Activity.class);
-                startActivityForResult(intent, EDIT_PASSWORD_CODE);
+                startActivity(intent);
                 break;
             case R.id.btn_logout:
                 SharedPreferenceUtils.putBoolean("UserStatus", false, getContext());
@@ -131,9 +131,15 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
                 break;
             case EDIT_NICKNAME_CODE:
                 bundle = data.getExtras();
-                String content = bundle.getString("content");
-                Log.i("content", content);
+                content = bundle.getString("content");
+                Log.i("nickname_content", content);
                 nickname.setText(content);
+                break;
+            case EDIT_MOBILE_CODE:
+                bundle = data.getExtras();
+                content = bundle.getString("content");
+                Log.i("mobile_content", content);
+                phone.setText(content);
                 break;
             case EDIT_PORTRAIT_CODE:
                 bundle = data.getExtras();

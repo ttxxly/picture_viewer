@@ -36,8 +36,6 @@ public class EditInfo2Activity extends AppCompatActivity {
             }
         });
 
-
-
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,9 +44,9 @@ public class EditInfo2Activity extends AppCompatActivity {
                 Log.i("原密码", password11);
 
                 if (!TextUtils.isEmpty(password11)) {
-                    String passwd = SharedPreferenceUtils.getString("loginPassword", "", getApplicationContext());
-                    System.out.println("密码： " + passwd);
-                    if (password11.equals(passwd)) {
+                    String password = SharedPreferenceUtils.getString("UserPassword", "", getApplicationContext());
+                    Log.i("原密码 ", password);
+                    if (password11.equals(password)) {
                         startActivity(new Intent(getApplicationContext(), EditInfo2Step2Activity.class));
                         finish();
                     }else {
