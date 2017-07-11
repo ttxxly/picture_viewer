@@ -81,6 +81,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private String title = "";
     private String keywords = "";
     private String description = "";
+    private ImageView mAdd_category;
 
 
     @Override
@@ -108,6 +109,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mAdd_pictures = (ImageView) findViewById(R.id.img_add_pictures);
         mSearch = (ImageView) findViewById(R.id.img_search);
         mDescription = (TextView) findViewById(R.id.tv_main_activity_description);
+        mAdd_category = (ImageView) findViewById(R.id.img_add_category);
     }
 
     /**
@@ -121,7 +123,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mPeople.setOnClickListener(this);
         mAdd_pictures.setOnClickListener(this);
         mSearch.setOnClickListener(this);
-
+        mAdd_category.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {//ViewPager滑动切换监听
             @Override
             public void onPageSelected(int arg0) {
@@ -198,6 +200,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.img_search:
                 startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                break;
+            case R.id.img_add_category: //添加分类页面
+
                 break;
         }
     }
