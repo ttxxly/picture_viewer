@@ -21,6 +21,5 @@ public class DetailsPhotosActivity extends AppCompatActivity {
         TextView date = (TextView) findViewById(R.id.tv_details_photos_date);
         TextView description = (TextView) findViewById(R.id.tv_details_photos_description);
 
-
     }
 }
