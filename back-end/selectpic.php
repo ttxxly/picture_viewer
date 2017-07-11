@@ -20,7 +20,7 @@ if(!empty($keys)) {
     $sql = "select * from photograph where keywords='$keys' and userid='$userid' ";
 }
 else{
-    $sql = "select * from photograph where and userid='$userid' ";
+    $sql = "select * from photograph where userid='$userid' ";
 }
 $result = mysql_query($sql);
 if ($result && $userid) {
