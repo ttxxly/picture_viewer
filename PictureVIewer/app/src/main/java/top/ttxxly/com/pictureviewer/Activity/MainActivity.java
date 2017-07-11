@@ -68,6 +68,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final int REQUESTCODE_PICK = 0;		// 相册选图标记
     private static final int REQUESTCODE_TAKE = 1;		// 相机拍照标记
     private static final int REQUESTCODE_CUTTING = 2;	// 图片裁切标记
+    private static final int REQUESTCODE_UPLOAD = 3;    //上传图片标记
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";// 头像文件名称
     private String urlpath;			// 图片本地路径
     private String resultStr = "";	// 服务端返回结果集
@@ -285,6 +286,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             Log.i("图片名称", df.format(new Date())+".jpg");
             //avatarImg.setImageDrawable(drawable);
 
+            Intent intent = new Intent(getApplicationContext(), UploadActivity.class);
+            intent.putExtra("url", urlpath);
+            startActivityForResult(intent, REQUESTCODE_UPLOAD);
+
             // 新线程后台上传服务端
             pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
             new Thread(uploadImageRunnable).start();
@@ -295,7 +300,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     /**
      * 使用HttpUrlConnection模拟post表单进行文件
-     * 上传平时很少使用，比较麻烦
      * 原理是： 分析文件上传的数据格式，然后根据格式构造相应的发送给服务器的字符串。
      */
     Runnable uploadImageRunnable = new Runnable() {

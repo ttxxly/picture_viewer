@@ -1,5 +1,6 @@
 package top.ttxxly.com.pictureviewer.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +36,7 @@ import static top.ttxxly.com.pictureviewer.Activity.MainActivity.mContext;
 public class HomeFragment extends Fragment {
 
     private String Url = "http://10.0.2.2/picture_viewer";
+    private static ProgressDialog pd;// 等待进度圈
     private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
 
     private Handler handler = new Handler() {
@@ -43,6 +45,7 @@ public class HomeFragment extends Fragment {
             super.handleMessage(msg);
             Photos data = new Gson().fromJson(msg.obj.toString(), Photos.class);
             photos = data.getPhotos();
+            pd.dismiss();
             switch (msg.what) {
                 case 1:
                     break;
@@ -58,7 +61,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        pd = ProgressDialog.show(mContext, null, "加载中，请稍候...");
+        StartRequestFromPHP();
         GridView gv_my_photo = (GridView) view.findViewById(R.id.gv_home);
         gv_my_photo.setAdapter(new GlideAdapter(photos));
         gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -34,7 +35,6 @@ public class MyPhotoFragment extends Fragment {
     private String Url = "http://10.0.2.2/picture_viewer";
     private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
 
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -43,6 +43,7 @@ public class MyPhotoFragment extends Fragment {
             photos = data.getPhotos();
             switch (msg.what) {
                 case 1:
+                    Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
                     Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
@@ -58,12 +59,12 @@ public class MyPhotoFragment extends Fragment {
         StartRequestFromPHP();
         GridView gv_my_photo = (GridView) view.findViewById(R.id.gv_my_photo);
         gv_my_photo.setAdapter(new GlideAdapter(photos));
-        /*gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             }
-        });*/
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -87,7 +88,7 @@ public class MyPhotoFragment extends Fragment {
     private void SendRequestToEditUserInfo() {
 
         String mUserId = SharedPreferenceUtils.getString("UserId", "", mContext);
-        String keys = "portrait";
+        String keys = "";
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
