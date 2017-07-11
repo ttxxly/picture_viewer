@@ -10,8 +10,10 @@
 //链接数据库
 require dirname(__FILE__).'/conn.php';//转换成硬路径，速度更快
 
-$userid ="33";// @$_GET['userid'];
-$keys="";//@$_GET['keys'];
+$userid=@$_GET['userid'];
+$keys=@$_GET['keys'];
+//$userid ="33";
+//$keys="";
 
 $i = '0';
 if(!empty($keys)) {
@@ -21,7 +23,7 @@ else{
     $sql = "select * from photograph where and userid='$userid' ";
 }
 $result = mysql_query($sql);
-if ($result && $keys && $userid) {
+if ($result && $userid) {
     $arr = array(
         'flat' => 'success',
         'message' => '搜索成功',
