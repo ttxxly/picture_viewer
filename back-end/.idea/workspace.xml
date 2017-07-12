@@ -34,25 +34,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="selectpic.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="selectpic.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/selectpic.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.0">
-              <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.8896175">
+              <caret line="58" column="13" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
               <folding>
-                <marker date="1499759973540" expanded="true" signature="257:325" placeholder="select * fro..photograph..." />
-                <marker date="1499759973540" expanded="true" signature="349:400" placeholder="select * fro..photograph..." />
+                <marker date="1499763460199" expanded="true" signature="259:327" placeholder="select * fro..photograph..." />
+                <marker date="1499763460199" expanded="true" signature="351:402" placeholder="select * fro..photograph..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/login.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2502732">
-              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="58" selection-end-column="12" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -143,7 +133,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
-    <property name="last_opened_file_path" value="G:/www/xiao/login.php" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../photograph" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -231,8 +221,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="54" column="1" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
           <folding>
-            <marker date="1499759973540" expanded="true" signature="257:325" placeholder="select * fro..photograph..." />
-            <marker date="1499759973540" expanded="true" signature="349:400" placeholder="select * fro..photograph..." />
+            <marker date="1499763460199" expanded="true" signature="259:327" placeholder="select * fro..photograph..." />
+            <marker date="1499763460199" expanded="true" signature="351:402" placeholder="select * fro..photograph..." />
           </folding>
         </state>
       </provider>
@@ -334,22 +324,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/selectpic.php">
+    <entry file="file://$PROJECT_DIR$/login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.0">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
-          <folding>
-            <marker date="1499759973540" expanded="true" signature="257:325" placeholder="select * fro..photograph..." />
-            <marker date="1499759973540" expanded="true" signature="349:400" placeholder="select * fro..photograph..." />
-          </folding>
+        <state vertical-scroll-proportion="0.6010929">
+          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/login.php">
+    <entry file="file://$PROJECT_DIR$/selectpic.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2502732">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="58" selection-end-column="12" />
-          <folding />
+        <state vertical-scroll-proportion="0.8896175">
+          <caret line="58" column="13" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
+          <folding>
+            <marker date="1499763460199" expanded="true" signature="259:327" placeholder="select * fro..photograph..." />
+            <marker date="1499763460199" expanded="true" signature="351:402" placeholder="select * fro..photograph..." />
+          </folding>
         </state>
       </provider>
     </entry>
