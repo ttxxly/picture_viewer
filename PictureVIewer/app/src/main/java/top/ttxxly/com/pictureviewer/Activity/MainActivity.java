@@ -47,6 +47,7 @@ import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.CircleImg;
 import top.ttxxly.com.pictureviewer.Utils.FileUtil;
 import top.ttxxly.com.pictureviewer.Utils.NetUtil;
+import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
@@ -316,9 +317,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      * 原理是： 分析文件上传的数据格式，然后根据格式构造相应的发送给服务器的字符串。
      */
     Runnable uploadImageRunnable = new Runnable() {
+
+        private String userid;
+
         @Override
         public void run() {
 
+            userid = SharedPreferenceUtils.getString("UserId", "",getApplicationContext());
             if(TextUtils.isEmpty(imgUrl)){
                 Log.i("上传错误", "还没有设置上传服务器的路径！");
                 return;
@@ -338,7 +343,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 textParams.put("title", title);
                 textParams.put("keywords", keywords);
                 textParams.put("description", description);
-                textParams.put("", description);
+                textParams.put("userid", userid);
 
                 // 利用HttpURLConnection对象从网络中获取网页数据
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
