@@ -29,7 +29,8 @@
         <activity android:name=".Activity.EditInfo2Step2Activity" />
         <activity android:name=".Activity.SearchActivity" />
         <activity android:name=".Activity.EditPortraitActivity" />
-        <activity android:name=".Activity.UploadActivity"></activity>
+        <activity android:name=".Activity.UploadActivity" />
+        <activity android:name=".Activity.AddCategoryActivity"></activity>
     </application>
 
 </manifest>

@@ -68,6 +68,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private static final int REQUESTCODE_PICK = 0;		// 相册选图标记
     private static final int REQUESTCODE_TAKE = 1;		// 相机拍照标记
     private static final int REQUESTCODE_CUTTING = 2;	// 图片裁切标记
+    private static final int REQUESTCODE_UPLOAD = 3;    //上传图片标记
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";// 头像文件名称
     private String urlpath;			// 图片本地路径
     private String resultStr = "";	// 服务端返回结果集
@@ -76,6 +77,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static MainActivity mContext = null;
     private ImageView mSearch;
     private TextView mDescription;
+
+    private String title = "";
+    private String keywords = "";
+    private String description = "";
+    private ImageView mAdd_category;
 
 
     @Override
@@ -103,6 +109,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mAdd_pictures = (ImageView) findViewById(R.id.img_add_pictures);
         mSearch = (ImageView) findViewById(R.id.img_search);
         mDescription = (TextView) findViewById(R.id.tv_main_activity_description);
+        mAdd_category = (ImageView) findViewById(R.id.img_add_category);
     }
 
     /**
@@ -116,7 +123,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mPeople.setOnClickListener(this);
         mAdd_pictures.setOnClickListener(this);
         mSearch.setOnClickListener(this);
-
+        mAdd_category.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {//ViewPager滑动切换监听
             @Override
             public void onPageSelected(int arg0) {
@@ -130,7 +137,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     case 1:
                         resetBottomBar();
                         mCategory.setTextColor(Color.parseColor("#227700"));
-                        mDescription.setText("分类");
+                        mDescription.setText("我的分类");
                         break;
                     case 2:
                         resetBottomBar();
@@ -194,6 +201,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.img_search:
                 startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                 break;
+            case R.id.img_add_category: //添加分类页面
+                startActivity(new Intent(getApplicationContext(), AddCategoryActivity.class));
+                break;
         }
     }
 
@@ -246,6 +256,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     setPicToView(data);
                 }
                 break;
+            case REQUESTCODE_UPLOAD:    //上传图片
+                Bundle bundle = data.getExtras();
+                title = bundle.getString("title");
+                keywords = bundle.getString("keywords");
+                description = bundle.getString("description");
+                // 新线程后台上传服务端
+                pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
+                new Thread(uploadImageRunnable).start();
+                break;
         }
     }
 
@@ -274,7 +293,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      */
     private void setPicToView(Intent picdata) {
         Bundle extras = picdata.getExtras();
-
         if (extras != null) {
             Log.i("裁剪图片", "成功");
             // 取得SDCard图片路径做显示
@@ -285,9 +303,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             Log.i("图片名称", df.format(new Date())+".jpg");
             //avatarImg.setImageDrawable(drawable);
 
-            // 新线程后台上传服务端
-            pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
-            new Thread(uploadImageRunnable).start();
+            Intent intent = new Intent(getApplicationContext(), UploadActivity.class);
+            intent.putExtra("url", urlpath);
+            startActivityForResult(intent, REQUESTCODE_UPLOAD);
         }else {
             Log.i("裁剪图片", "失败");
         }
@@ -295,7 +313,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     /**
      * 使用HttpUrlConnection模拟post表单进行文件
-     * 上传平时很少使用，比较麻烦
      * 原理是： 分析文件上传的数据格式，然后根据格式构造相应的发送给服务器的字符串。
      */
     Runnable uploadImageRunnable = new Runnable() {
@@ -318,6 +335,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 // 要上传的图片文件
                 File file = new File(urlpath);
                 fileparams.put("myfile", file);
+                textParams.put("title", title);
+                textParams.put("keywords", keywords);
+                textParams.put("description", description);
+                textParams.put("", description);
+
                 // 利用HttpURLConnection对象从网络中获取网页数据
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 // 设置连接超时（记得设置连接超时,如果网络不好,Android系统在超过默认时间会收回资源中断操作）

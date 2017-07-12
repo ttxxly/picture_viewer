@@ -1,5 +1,6 @@
 package top.ttxxly.com.pictureviewer.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,13 +29,13 @@ import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.Photos;
 
-import static android.R.attr.data;
 import static top.ttxxly.com.pictureviewer.Activity.MainActivity.mContext;
 
 
 public class HomeFragment extends Fragment {
 
     private String Url = "http://10.0.2.2/picture_viewer";
+    private static ProgressDialog pd;// 等待进度圈
     private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
 
     private Handler handler = new Handler() {
@@ -43,8 +44,10 @@ public class HomeFragment extends Fragment {
             super.handleMessage(msg);
             Photos data = new Gson().fromJson(msg.obj.toString(), Photos.class);
             photos = data.getPhotos();
+            pd.dismiss();
             switch (msg.what) {
                 case 1:
+                    gv_my_photo.setAdapter(new GlideAdapter(photos));
                     break;
                 case -1:
                     Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
@@ -52,21 +55,22 @@ public class HomeFragment extends Fragment {
             }
         }
     };
+    private GridView gv_my_photo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        GridView gv_my_photo = (GridView) view.findViewById(R.id.gv_home);
-        gv_my_photo.setAdapter(new GlideAdapter(photos));
+        pd = ProgressDialog.show(mContext, null, "加载中，请稍候...");
+        StartRequestFromPHP();
+        gv_my_photo = (GridView) view.findViewById(R.id.gv_home);
         gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), "点击了"+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), DetailsPhotosActivity.class);
-                intent.putExtra("data", data);
+                intent.putExtra("photos_data", photos.get(position));
                 startActivity(intent);
             }
         });

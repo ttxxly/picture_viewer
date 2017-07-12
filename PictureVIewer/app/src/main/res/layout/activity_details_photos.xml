@@ -8,7 +8,7 @@
     tools:context="top.ttxxly.com.pictureviewer.Activity.DetailsPhotosActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/img_details_pic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@mipmap/launcher_bg" />
@@ -20,7 +20,6 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_details_photos_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -28,10 +27,10 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/tv_details_photos_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="帮防化服"
             android:textSize="16sp"/>
     </RelativeLayout>
 
@@ -51,7 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="4354"
             android:textSize="16sp"/>
     </RelativeLayout>
 
@@ -71,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="帮防化服"
             android:textSize="16sp"/>
     </RelativeLayout>
     <RelativeLayout
@@ -90,7 +87,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="2017年6月30日09:10:25"
             android:textSize="16sp"/>
     </RelativeLayout>
 
@@ -111,7 +107,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv_miaoshu"
-            android:text="帮防化服345rgfsdgdsfgdsdsfsgdsgdsgsfdgdsgdsgdsfgsdgfdgsfgsdgsdgfdsgdsgdsg"
             android:textSize="16sp"/>
     </LinearLayout>
 

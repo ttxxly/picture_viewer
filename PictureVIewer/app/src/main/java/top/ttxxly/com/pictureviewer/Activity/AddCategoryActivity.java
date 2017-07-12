@@ -1,18 +1,14 @@
-package top.ttxxly.com.pictureviewer.Fragment;
+package top.ttxxly.com.pictureviewer.Activity;
 
-
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -20,65 +16,61 @@ import com.google.gson.Gson;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import top.ttxxly.com.pictureviewer.Activity.DetailsPhotosActivity;
-import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
-import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
-import top.ttxxly.com.pictureviewer.models.Photos;
+import top.ttxxly.com.pictureviewer.models.User;
 
-import static top.ttxxly.com.pictureviewer.Activity.MainActivity.mContext;
-
-
-public class MyPhotoFragment extends Fragment {
+public class AddCategoryActivity extends AppCompatActivity {
 
     private String Url = "http://10.0.2.2/picture_viewer";
-    private static ProgressDialog pd;// 等待进度圈
-    private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
 
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Photos data = new Gson().fromJson(msg.obj.toString(), Photos.class);
-            photos = data.getPhotos();
-            pd.dismiss();
+
             switch (msg.what) {
                 case 1:
-                    gv_my_photo.setAdapter(new GlideAdapter(photos));
-                    Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "添加分类失败", Toast.LENGTH_SHORT).show();
+                    finish();
                     break;
                 case -1:
-                    Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "添加分类失败", Toast.LENGTH_SHORT).show();
                     break;
             }
+
         }
     };
-    private GridView gv_my_photo;
+    private EditText title;
+    private EditText keywords;
+    private EditText description;
+    private Button confirm;
+    private ImageView mReturn;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_photo, container, false);
-        pd = ProgressDialog.show(mContext, null, "加载中，请稍候...");
-        StartRequestFromPHP();
-        gv_my_photo = (GridView) view.findViewById(R.id.gv_my_photo);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_category);
 
-        gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        title = (EditText) findViewById(R.id.et_add_category_title);
+        keywords = (EditText) findViewById(R.id.et_add_category_keywords);
+        description = (EditText) findViewById(R.id.et_add_category_description);
+        confirm = (Button) findViewById(R.id.btn_add_category);
+        mReturn = (ImageView) findViewById(R.id.img_upload_return_top);
+        mReturn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), DetailsPhotosActivity.class);
-                intent.putExtra("photos_data", photos.get(position));
-                startActivity(intent);
+            public void onClick(View v) {
+                finish();
             }
         });
-
-        // Inflate the layout for this fragment
-        return view;
-
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartRequestFromPHP();
+            }
+        });
     }
 
     private void StartRequestFromPHP() {
@@ -87,7 +79,7 @@ public class MyPhotoFragment extends Fragment {
         new Thread() {
             public void run() {
                 try {
-                    SendRequestToEditUserInfo();
+                    SendRequestToLogin();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -95,14 +87,11 @@ public class MyPhotoFragment extends Fragment {
         }.start();
     }
 
-    private void SendRequestToEditUserInfo() {
-
-        String mUserId = SharedPreferenceUtils.getString("UserId", "", mContext);
-        String keys = "";
+    private void SendRequestToLogin() {
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
-            String url = Url + "/interface/selectpic.php" + "?userid=" + mUserId + "&keys=" + keys;
+            String url = Url + "/interface/login.php" ;
             Log.i("URl", url);
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
@@ -120,15 +109,14 @@ public class MyPhotoFragment extends Fragment {
                 InputStream is = conn.getInputStream();
                 String data = StreamUtils.Stream2String(is);
                 Log.i("data", data);
-                Photos value = new Gson().fromJson(data, Photos.class);
-
+                User value = new Gson().fromJson(data, User.class);
                 String flat = value.getFlat();
                 Message msg = new Message();
                 if (flat.equals("success")) {
-                    Log.i("Status", "请求我的图片成功！！！");
+                    Log.i("Status", "登录成功，3秒后跳转。。。" );
                     msg.what = 1;
                     msg.obj = data;
-                } else {
+                }else {
                     msg.what = -1;
                 }
                 handler.sendMessage(msg);
@@ -146,5 +134,4 @@ public class MyPhotoFragment extends Fragment {
         }
 
     }
-
 }

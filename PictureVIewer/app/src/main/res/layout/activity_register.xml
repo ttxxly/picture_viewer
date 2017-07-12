@@ -32,7 +32,8 @@
             android:layout_centerInParent="true"
             android:text="注册页面"
             android:textSize="16sp"
-            android:textColor="#CACDD0"/>
+            android:textColor="#CACDD0"
+            android:id="@+id/textView" />
 
     </RelativeLayout>
 
@@ -151,7 +152,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            android:text="@string/register_tip" />
+            android:text="@string/register_tip"
+            android:textColor="#CACDD0"
+            android:textSize="13sp"/>
 
         <Button
             android:id="@+id/btn_register_register"
