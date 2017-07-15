@@ -23,18 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.ttxxly.com.pictureviewer.Activity.CategoryActivity;
-import top.ttxxly.com.pictureviewer.Adapter.Glide1Adapter;
+import top.ttxxly.com.pictureviewer.Adapter.Category_GlideAdapter;
 import top.ttxxly.com.pictureviewer.Adapter.RecyclerViewAdapter;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.Category;
-import top.ttxxly.com.pictureviewer.models.User;
 
 import static top.ttxxly.com.pictureviewer.Activity.MainActivity.mContext;
 
 public class CategoryFragment extends Fragment {
 
+    protected boolean isVisible;    //Fragment当前状态是否可见
     private RecyclerViewAdapter adapter;
     private String Url = "http://10.0.2.2/picture_viewer";
     private static ProgressDialog pd;// 等待进度圈
@@ -125,6 +125,27 @@ public class CategoryFragment extends Fragment {
 
     };
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+    //当前页面不可见
+    private void onInvisible() {
+    }
+
+    //当前页面可见
+    private void onVisible() {
+
+        StartRequestFromPHP();
+    }
 
     private Handler handler = new Handler(){
         @Override
@@ -135,10 +156,10 @@ public class CategoryFragment extends Fragment {
             pd.dismiss();
             switch (msg.what) {
                 case 1:
-                    gv_category.setAdapter(new Glide1Adapter(titles, urls));
+                    Toast.makeText(mContext, "分类数据请求成功", Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
-                    Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "分类数据请求失败", Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -150,9 +171,9 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_category, container, false);
+        pd = ProgressDialog.show(mContext, null, "分类数据加载中，请稍候...");
         gv_category = (GridView) v.findViewById(R.id.GV_category);
-        pd = ProgressDialog.show(mContext, null, "加载中，请稍候...");
-        StartRequestFromPHP();
+        gv_category.setAdapter(new Category_GlideAdapter(titles, urls));
         gv_category.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -184,13 +205,13 @@ public class CategoryFragment extends Fragment {
     private void SendRequestToLogin() {
 
         String userid = SharedPreferenceUtils.getString("UserId", "", getContext());
-        Log.i("Userid", userid);
+        Log.i("分类Userid", userid);
 
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
             String url = Url + "/interface/category.php" + "?userid=" + userid;
-            Log.i("URl", url);
+            Log.i("分类URl", url);
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
             conn = (HttpURLConnection) mURL.openConnection();
@@ -205,12 +226,12 @@ public class CategoryFragment extends Fragment {
             if (responseCode == 200) {
                 InputStream is = conn.getInputStream();
                 String data = StreamUtils.Stream2String(is);
-                Log.i("data", data);
-                User value = new Gson().fromJson(data, User.class);
+                Log.i("分类data", data);
+                Category value = new Gson().fromJson(data, Category.class);
                 String flat = value.getFlat();
                 Message msg = new Message();
                 if (flat.equals("success")) {
-                    Log.i("Status", "登录成功，3秒后跳转。。。" );
+                    Log.i("分类Status", "分类数据请求成功" );
                     msg.what = 1;
                     msg.obj = data;
                 }else {
@@ -218,12 +239,12 @@ public class CategoryFragment extends Fragment {
                 }
                 handler.sendMessage(msg);
             } else {
-                Log.i("访问失败", "responseCode");
+                Log.i("分类数据访问失败", "responseCode");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("访问失败1", "无法连接服务器");
+            Log.i("分类数据请求失败", "无法连接服务器");
         } finally {
             if (conn != null) {
                 conn.disconnect();// 关闭连接

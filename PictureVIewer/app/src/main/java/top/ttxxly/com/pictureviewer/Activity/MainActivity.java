@@ -98,6 +98,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         resetBottomBar();
         mHome.setTextColor(Color.parseColor("#227700"));
         viewPagerAdapter =new ViewPagerAdapter(getSupportFragmentManager(),data);//初始化适配器类
+        mViewPager.setOffscreenPageLimit(1);//设置默认只加载一个 Fragment
         mViewPager.setAdapter(viewPagerAdapter);
     }
 
@@ -392,7 +393,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 case 0:
                     pd.dismiss();
                     Log.i("上传返回信息", resultStr);
-                    Toast.makeText(MainActivity.this, "我上传l", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "我一个马步上传，当当当！！！", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;

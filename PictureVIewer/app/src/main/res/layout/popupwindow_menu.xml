@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#D4D4D4"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/pop_manu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#26324b"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/pop_menu_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dp"
+            android:background="#26324b"
+            android:padding="10dp"
+            android:text="增加分类"
+            android:textColor="#CACDD0"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/pop_menu_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="5dp"
+            android:background="#26324b"
+            android:padding="10dp"
+            android:text="修改分类"
+            android:textColor="#CACDD0"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/pop_menu_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="5dp"
+            android:background="#26324b"
+            android:padding="10dp"
+            android:text="删除分类"
+            android:textColor="#CACDD0"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.ttxxly.com.pictureviewer.Activity.DetailsPhotosActivity;
-import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
+import top.ttxxly.com.pictureviewer.Adapter.Home_GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
@@ -34,9 +34,38 @@ import static top.ttxxly.com.pictureviewer.Activity.MainActivity.mContext;
 
 public class HomeFragment extends Fragment {
 
+    protected boolean isVisible;    //Fragment当前状态是否可见
     private String Url = "http://10.0.2.2/picture_viewer";
     private static ProgressDialog pd;// 等待进度圈
     private List<Photos.PhotosBean> photos = new ArrayList<Photos.PhotosBean>();
+    private GridView gv_my_photo;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.i("首页setUserVisibleHint", "首页setUserVisibleHint执行了");
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+
+    //不可见
+    private void onInvisible() {
+
+    }
+
+    /**
+     * 可见
+     */
+    protected void onVisible() {
+        //可见的话就加载数据.
+        StartRequestFromPHP();
+    }
+
 
     private Handler handler = new Handler() {
         @Override
@@ -47,28 +76,29 @@ public class HomeFragment extends Fragment {
             pd.dismiss();
             switch (msg.what) {
                 case 1:
-                    gv_my_photo.setAdapter(new GlideAdapter(photos));
+                    Toast.makeText(mContext, "首页数据请求成功", Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
-                    Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "首页数据请求失败", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
     };
-    private GridView gv_my_photo;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("首页onCreateView", "首页onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        pd = ProgressDialog.show(mContext, null, "加载中，请稍候...");
-        StartRequestFromPHP();
+        pd = ProgressDialog.show(mContext, null, "首页加载中，请稍候...");
         gv_my_photo = (GridView) view.findViewById(R.id.gv_home);
+        gv_my_photo.setAdapter(new Home_GlideAdapter(photos));
         gv_my_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "点击了"+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "首页点击了"+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), DetailsPhotosActivity.class);
                 intent.putExtra("photos_data", photos.get(position));
                 startActivity(intent);
@@ -99,7 +129,7 @@ public class HomeFragment extends Fragment {
         try {
             // 创建一个URL对象
             String url = Url + "/interface/selectpic.php" + "?userid=" + mUserId + "&keys=" + keys;
-            Log.i("URl", url);
+            Log.i("首页URl", url);
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
             conn = (HttpURLConnection) mURL.openConnection();
@@ -115,13 +145,13 @@ public class HomeFragment extends Fragment {
 
                 InputStream is = conn.getInputStream();
                 String data = StreamUtils.Stream2String(is);
-                Log.i("data", data);
+                Log.i("首页data", data);
                 Photos value = new Gson().fromJson(data, Photos.class);
 
                 String flat = value.getFlat();
                 Message msg = new Message();
                 if (flat.equals("success")) {
-                    Log.i("Status", "修改用户信息请求成功！！！");
+                    Log.i("首页Status", "首页数据请求成功！！！");
                     msg.what = 1;
                     msg.obj = data;
                 } else {
@@ -129,12 +159,12 @@ public class HomeFragment extends Fragment {
                 }
                 handler.sendMessage(msg);
             } else {
-                Log.i("访问失败", "responseCode");
+                Log.i("首页访问失败", "responseCode");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("访问失败1", "无法连接服务器");
+            Log.i("首页访问失败", "无法连接服务器");
         } finally {
             if (conn != null) {
                 conn.disconnect();// 关闭连接

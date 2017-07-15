@@ -47,10 +47,12 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
     private Bundle bundle;
     private String content;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.i("我onCreateView", "我onCreateView执行了");
         View view = inflater.inflate(R.layout.fragment_people, container, false);
 
         rl_portrait = (RelativeLayout) view.findViewById(R.id.RL_fragment_people_portrait);
@@ -77,7 +79,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
     private void init()  {
         String portraitAddress = SharedPreferenceUtils.getString("UserPortrait", "", getContext());
         String userid = SharedPreferenceUtils.getString("UserId", "", getContext());
-        Log.i("portraitAddress", portraitAddress);
+        Log.i("我portraitAddress", portraitAddress);
         Glide.with(getContext()).load(URL + portraitAddress).centerCrop().into(portrait);
         nickname.setText(SharedPreferenceUtils.getString("UserNickname", "", getContext()));
         phone.setText(SharedPreferenceUtils.getString("UserMobile", "", getContext()));
@@ -88,7 +90,7 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.RL_fragment_people_id:
                 Toast.makeText(getContext(), "id不可修改", Toast.LENGTH_SHORT).show();
-                Log.i("status", "点击了id");
+                Log.i("我status", "点击了id");
                 break;
             case R.id.RL_fragment_people_portrait:
                 Toast.makeText(mContext, "修改头像", Toast.LENGTH_SHORT).show();
@@ -132,19 +134,19 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
             case EDIT_NICKNAME_CODE:
                 bundle = data.getExtras();
                 content = bundle.getString("content");
-                Log.i("nickname_content", content);
+                Log.i("我nickname_content", content);
                 nickname.setText(content);
                 break;
             case EDIT_MOBILE_CODE:
                 bundle = data.getExtras();
                 content = bundle.getString("content");
-                Log.i("mobile_content", content);
+                Log.i("我mobile_content", content);
                 phone.setText(content);
                 break;
             case EDIT_PORTRAIT_CODE:
                 bundle = data.getExtras();
                 String url = bundle.getString("url");
-                Log.i("url", url);
+                Log.i("我url", url);
                 Glide.with(getContext()).load(URL + url).centerCrop().into(portrait);
                 break;
         }

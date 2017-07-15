@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
+import top.ttxxly.com.pictureviewer.Adapter.Home_GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
@@ -49,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
             pd.dismiss();
             switch (msg.what) {
                 case 1:
-                    gv_search.setAdapter(new GlideAdapter(photos));
+                    gv_search.setAdapter(new Home_GlideAdapter(photos));
                     break;
                 case -1:
                     Toast.makeText(getApplicationContext(), "没有搜索到任何信息", Toast.LENGTH_SHORT).show();

@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
+import top.ttxxly.com.pictureviewer.Adapter.Home_GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
@@ -51,7 +51,7 @@ public class EditPortraitActivity extends AppCompatActivity {
                 case 1:
                     Photos data = new Gson().fromJson(msg.obj.toString(), Photos.class);
                     photos = data.getPhotos();
-                    mPortrait.setAdapter(new GlideAdapter(photos));
+                    mPortrait.setAdapter(new Home_GlideAdapter(photos));
                     Toast.makeText(getApplicationContext(), "头像请求成功", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:

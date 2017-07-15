@@ -20,12 +20,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.ttxxly.com.pictureviewer.Adapter.GlideAdapter;
+import top.ttxxly.com.pictureviewer.Adapter.Home_GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.Photos;
-import top.ttxxly.com.pictureviewer.models.User;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -43,7 +42,7 @@ public class CategoryActivity extends AppCompatActivity {
 
             switch (msg.what) {
                 case 1:
-                    gv_category_activity.setAdapter(new GlideAdapter(photos));
+                    gv_category_activity.setAdapter(new Home_GlideAdapter(photos));
                     break;
                 case -1:
                     Toast.makeText(getApplicationContext(), "请求失败", Toast.LENGTH_SHORT).show();
@@ -54,6 +53,7 @@ public class CategoryActivity extends AppCompatActivity {
     };
     private GridView gv_category_activity;
     private String title;
+    private String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         title = extras.getString("title");
-
+        Toast.makeText(getApplicationContext(), title, Toast.LENGTH_SHORT).show();
         gv_category_activity = (GridView) findViewById(R.id.GV_category_activity);
 
         StartRequestFromPHP();
@@ -93,11 +93,14 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void SendRequestToLogin() {
+        userid = SharedPreferenceUtils.getString("UserId", "", getApplicationContext());
+
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
-            String url = Url + "/interface/selectpic.php" + "?userid=" + SharedPreferenceUtils.getString("UserId", "", getApplicationContext()) + "&keywords=" + title;
-            Log.i("URl", url);
+            String url = Url + "/interface/category_search.php" + "?userid=" + userid + "&title=" + title;
+            Log.i("URl123456", url);
+            Log.i("分类", userid +title+"cdsfd");
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
             conn = (HttpURLConnection) mURL.openConnection();
@@ -114,7 +117,7 @@ public class CategoryActivity extends AppCompatActivity {
                 InputStream is = conn.getInputStream();
                 String data = StreamUtils.Stream2String(is);
                 Log.i("data", data);
-                User value = new Gson().fromJson(data, User.class);
+                Photos value = new Gson().fromJson(data, Photos.class);
                 String flat = value.getFlat();
                 Message msg = new Message();
                 if (flat.equals("success")) {

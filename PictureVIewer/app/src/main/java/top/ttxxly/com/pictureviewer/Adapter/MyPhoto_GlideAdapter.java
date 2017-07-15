@@ -17,14 +17,14 @@ import top.ttxxly.com.pictureviewer.models.Photos;
  * Created by ttxxly on 2017/7/1.
  */
 
-public class GlideAdapter extends BaseAdapter {
+public class MyPhoto_GlideAdapter extends BaseAdapter {
 
     private String Url = "http://10.0.2.2/picture_viewer";
 
     List<Photos.PhotosBean> photosBeanList;
-    public GlideAdapter(List<Photos.PhotosBean> photosBeanList) {
+    public MyPhoto_GlideAdapter(List<Photos.PhotosBean> photosBeanList) {
         this.photosBeanList = photosBeanList;
-        Log.i("图片数量", ""+photosBeanList.size());
+        Log.i("图片GlideAdapter数量", ""+photosBeanList.size());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class GlideAdapter extends BaseAdapter {
         * .placeholder(R.mipmap.girls) //占位图，图片还没有加载完成的时候就显示这张图片
         * .centerCrop()     //缩放图像让它填充到 ImageView 界限内并且裁剪额外的部分
         * */
-        Log.i("图片地址", Url + photosBeanList.get(position).getUrl());
+        Log.i("图片glideAdapter_url", Url + photosBeanList.get(position).getUrl());
         Glide.with(parent.getContext()).load(Url + photosBeanList.get(position).getUrl()).placeholder(R.mipmap.login_pic).centerCrop().into(grideView_image);
         return v;
     }
