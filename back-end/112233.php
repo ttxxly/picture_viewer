@@ -20,17 +20,30 @@ if(is_uploaded_file($file)){
         echo "上传失败";
 }
 
+$image='pictrue/'.$_FILES['myfile']['name'];
 $time=time();      //当前时间戳
 $datetime=date('Y-m-d-G-i-s',$time+28800);  //将时间戳转化为时间格式，28800是八个小时，因为东八区
 $title=$_GET['title'];//'风景99';
 $description=$_GET['description'];//'这是美景';
 $keywords=$_GET['keywords'];//'风景';
-$image='pictrue/'.$_FILES['myfile']['name'];
-$categoryid=$_GET['categoryid'];//'66';
-$icon=$_GET['icon'];//'33';
+$userid=$_GET['userid'];
+$sqll="select id from category where userid='$userid'";
+$resultt=mysql_query($sqll);
+$rows=mysql_fetch_object($resultt);
+if(!$rows) {
+    $sa="insert into category(userid,title,description,keywords) values('$userid','$title','$description','$keywords')";
+    mysql_query($sa);
+    $categoryid=mysql_insert_id();
+
+}
+else{
+    $categoryid=$rows->id;
+}
+
+
 
 //$sql="update photograph set datetime='$datetime' description='$description' keywords='$keywords' image='$image' categoryid='$categoryid' icon='$icon'";
-$sql="insert into photograph(categoryid,title,description,keywords,image,icon,datetime) values('$categoryid','$title','$description','$keywords','$image','$icon','$datetime')";
+$sql="insert into photograph(categoryid,title,description,keywords,image,userid,datetime) values('$categoryid','$title','$description','$keywords','$image','$userid','$datetime')";
 $result=mysql_query($sql);
 if($result)
 {
