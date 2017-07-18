@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Random;
 
 import top.ttxxly.com.pictureviewer.R;
 
@@ -59,8 +60,10 @@ public class Category_GlideAdapter extends BaseAdapter {
         * .placeholder(R.mipmap.girls) //占位图，图片还没有加载完成的时候就显示这张图片
         * .centerCrop()     //缩放图像让它填充到 ImageView 界限内并且裁剪额外的部分
         * */
-        Log.i("分类GlideAdapter_url", urlList[position]);
-        Glide.with(parent.getContext()).load(urlList[position]).placeholder(R.mipmap.login_pic).centerCrop().into(grideView_image);
+        Random ra =new Random();
+        int cur = ra.nextInt(9);
+        Log.i("12345654334eAdapter_url", urlList[cur]);
+        Glide.with(parent.getContext()).load(urlList[cur]).placeholder(R.mipmap.login_pic).centerCrop().into(grideView_image);
         text.setText(titleList.get(position));
         return v;
     }

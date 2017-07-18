@@ -22,28 +22,28 @@ import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.User;
 
-public class AddCategoryActivity extends AppCompatActivity {
+public class DeleteCategoryActivity extends AppCompatActivity {
 
     private String Url = "http://10.0.2.2/picture_viewer";
-    private EditText mTitle;
-    private EditText keywords;
-    private EditText description;
-    private Button confirm;
+    private EditText mDeleteCategoryTitle;
+    private Button mDeleteCategoryConfirm;
     private ImageView mReturn;
-
 
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            String  v = msg.obj.toString();
+            User u = new Gson().fromJson(v, User.class);
+
             switch (msg.what) {
                 case 1:
-                    Toast.makeText(getApplicationContext(), "添加分类成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), u.getMessage(), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
                 case -1:
-                    Toast.makeText(getApplicationContext(), "添加分类失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), u.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -52,20 +52,18 @@ public class AddCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_category);
+        setContentView(R.layout.activity_delete_category);
 
-        mTitle = (EditText) findViewById(R.id.et_add_category_title);
-        keywords = (EditText) findViewById(R.id.et_add_category_keywords);
-        description = (EditText) findViewById(R.id.et_add_category_description);
-        confirm = (Button) findViewById(R.id.btn_add_category);
-        mReturn = (ImageView) findViewById(R.id.img_add_category_return_top);
+        mDeleteCategoryTitle = (EditText) findViewById(R.id.et_delete_category_title);
+        mDeleteCategoryConfirm = (Button) findViewById(R.id.btn_delete_category_confirm);
+        mReturn = (ImageView) findViewById(R.id.img_delete_category_return_top);
         mReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        confirm.setOnClickListener(new View.OnClickListener() {
+        mDeleteCategoryConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StartRequestFromPHP();
@@ -80,11 +78,11 @@ public class AddCategoryActivity extends AppCompatActivity {
             public void run() {
                 try {
                     HttpURLConnection conn = null;
+                    String id = SharedPreferenceUtils.getString("UserId", "", getApplicationContext());
                     try {
                         // 创建一个URL对象
-                        String id = SharedPreferenceUtils.getString("UserId", "", getApplicationContext());
-                        String url = Url + "/interface/AddCategory.php" + "?userid="+id+"&title="+mTitle.getText().toString()+"&description=" + description.getText().toString()+"&keywords="+keywords.getText().toString();
-                        Log.i("10101010101URl", url+"101024954398494384392");
+                        String url = Url + "/interface/deleteCategory.php" + "?userid=" + id + "&title=" +  mDeleteCategoryTitle.getText().toString();
+                        Log.i("URl", url);
                         URL mURL = new URL(url);
                         // 调用URL的openConnection()方法,获取HttpURLConnection对象
                         conn = (HttpURLConnection) mURL.openConnection();
@@ -97,7 +95,6 @@ public class AddCategoryActivity extends AppCompatActivity {
 
                         int responseCode = conn.getResponseCode();// 调用此方法就不必再使用conn.connect()方法
                         if (responseCode == 200) {
-
                             InputStream is = conn.getInputStream();
                             String data = StreamUtils.Stream2String(is);
                             Log.i("data", data);
@@ -105,11 +102,12 @@ public class AddCategoryActivity extends AppCompatActivity {
                             String flat = value.getFlat();
                             Message msg = new Message();
                             if (flat.equals("success")) {
-                                Log.i("Status", "登录成功，3秒后跳转。。。" );
+                                Log.i("Status", "删除分类成功!!!!!" );
                                 msg.what = 1;
                                 msg.obj = data;
                             }else {
                                 msg.what = -1;
+                                msg.obj = data;
                             }
                             handler.sendMessage(msg);
                         } else {

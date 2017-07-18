@@ -18,20 +18,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import top.ttxxly.com.pictureviewer.R;
-import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.User;
 
-public class AddCategoryActivity extends AppCompatActivity {
+public class EditCategoryActivity extends AppCompatActivity {
 
     private String Url = "http://10.0.2.2/picture_viewer";
-    private EditText mTitle;
-    private EditText keywords;
-    private EditText description;
-    private Button confirm;
+    private EditText mEditCategoryTitle;
+    private EditText mEitCategoryKeywords;
+    private EditText mEitCategoryDescription;
+    private Button mEditCategoryConfirm;
     private ImageView mReturn;
-
-
 
     private Handler handler = new Handler(){
         @Override
@@ -39,11 +36,11 @@ public class AddCategoryActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    Toast.makeText(getApplicationContext(), "添加分类成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "修改分类成功", Toast.LENGTH_SHORT).show();
                     finish();
                     break;
                 case -1:
-                    Toast.makeText(getApplicationContext(), "添加分类失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "修改分类失败，请返回", Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -52,27 +49,26 @@ public class AddCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_category);
+        setContentView(R.layout.activity_edit_category);
 
-        mTitle = (EditText) findViewById(R.id.et_add_category_title);
-        keywords = (EditText) findViewById(R.id.et_add_category_keywords);
-        description = (EditText) findViewById(R.id.et_add_category_description);
-        confirm = (Button) findViewById(R.id.btn_add_category);
-        mReturn = (ImageView) findViewById(R.id.img_add_category_return_top);
+        mEditCategoryTitle = (EditText) findViewById(R.id.et_edit_category_title);
+        mEitCategoryKeywords = (EditText) findViewById(R.id.et_edit_category_keywords);
+        mEitCategoryDescription = (EditText) findViewById(R.id.et_edit_category_description);
+        mEditCategoryConfirm = (Button) findViewById(R.id.btn_edit_category_confirm);
+        mReturn = (ImageView) findViewById(R.id.img_edit_category_return_top);
         mReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        confirm.setOnClickListener(new View.OnClickListener() {
+        mEditCategoryConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StartRequestFromPHP();
             }
         });
     }
-
     private void StartRequestFromPHP() {
 
         //新建线程
@@ -82,9 +78,8 @@ public class AddCategoryActivity extends AppCompatActivity {
                     HttpURLConnection conn = null;
                     try {
                         // 创建一个URL对象
-                        String id = SharedPreferenceUtils.getString("UserId", "", getApplicationContext());
-                        String url = Url + "/interface/AddCategory.php" + "?userid="+id+"&title="+mTitle.getText().toString()+"&description=" + description.getText().toString()+"&keywords="+keywords.getText().toString();
-                        Log.i("10101010101URl", url+"101024954398494384392");
+                        String url = Url + "/interface/update_category.php" ;
+                        Log.i("URl", url);
                         URL mURL = new URL(url);
                         // 调用URL的openConnection()方法,获取HttpURLConnection对象
                         conn = (HttpURLConnection) mURL.openConnection();
@@ -97,7 +92,6 @@ public class AddCategoryActivity extends AppCompatActivity {
 
                         int responseCode = conn.getResponseCode();// 调用此方法就不必再使用conn.connect()方法
                         if (responseCode == 200) {
-
                             InputStream is = conn.getInputStream();
                             String data = StreamUtils.Stream2String(is);
                             Log.i("data", data);

@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -43,6 +44,7 @@ import top.ttxxly.com.pictureviewer.Fragment.HomeFragment;
 import top.ttxxly.com.pictureviewer.Fragment.MyPhotoFragment;
 import top.ttxxly.com.pictureviewer.Fragment.PeopleFragment;
 import top.ttxxly.com.pictureviewer.PopupWindow.AddPhotosPopupWindow;
+import top.ttxxly.com.pictureviewer.PopupWindow.MenuPopupWindow;
 import top.ttxxly.com.pictureviewer.R;
 import top.ttxxly.com.pictureviewer.Utils.CircleImg;
 import top.ttxxly.com.pictureviewer.Utils.FileUtil;
@@ -66,7 +68,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     // 上传服务器的路径【一般不硬编码到程序中】
     private String imgUrl = "http://10.0.2.2/picture_viewer/interface/upload_pictures.php";
 
-    private static final int REQUESTCODE_PICK = 0;		// 相册选图标记
+    private static final int REQUESTCODE_PICK = 4;		// 相册选图标记
     private static final int REQUESTCODE_TAKE = 1;		// 相机拍照标记
     private static final int REQUESTCODE_CUTTING = 2;	// 图片裁切标记
     private static final int REQUESTCODE_UPLOAD = 3;    //上传图片标记
@@ -82,7 +84,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private String title = "";
     private String keywords = "";
     private String description = "";
-    private ImageView mAdd_category;
+    private ImageView mManager_category;
+    private MenuPopupWindow managerCategory;
+    private Bitmap photo;
+    private Uri address;
 
 
     @Override
@@ -98,7 +103,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         resetBottomBar();
         mHome.setTextColor(Color.parseColor("#227700"));
         viewPagerAdapter =new ViewPagerAdapter(getSupportFragmentManager(),data);//初始化适配器类
-        mViewPager.setOffscreenPageLimit(1);//设置默认只加载一个 Fragment
         mViewPager.setAdapter(viewPagerAdapter);
     }
 
@@ -111,7 +115,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mAdd_pictures = (ImageView) findViewById(R.id.img_add_pictures);
         mSearch = (ImageView) findViewById(R.id.img_search);
         mDescription = (TextView) findViewById(R.id.tv_main_activity_description);
-        mAdd_category = (ImageView) findViewById(R.id.img_add_category);
+        mManager_category = (ImageView) findViewById(R.id.img_manager_category);
     }
 
     /**
@@ -125,7 +129,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mPeople.setOnClickListener(this);
         mAdd_pictures.setOnClickListener(this);
         mSearch.setOnClickListener(this);
-        mAdd_category.setOnClickListener(this);
+        mManager_category.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {//ViewPager滑动切换监听
             @Override
             public void onPageSelected(int arg0) {
@@ -176,21 +180,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        resetBottomBar();   //重置颜色
+
         switch (v.getId()) {
             case R.id.tv_home:
+                resetBottomBar();   //重置颜色
                 mViewPager.setCurrentItem(0, false);
                 mHome.setTextColor(Color.parseColor("#227700"));
                 break;
             case R.id.tv_category:
+                resetBottomBar();   //重置颜色
                 mViewPager.setCurrentItem(1, false);
                 mCategory.setTextColor(Color.parseColor("#227700"));
                 break;
             case R.id.tv_my_photo:
+                resetBottomBar();   //重置颜色
                 mViewPager.setCurrentItem(2, false);
                 mMyPhoto.setTextColor(Color.parseColor("#227700"));
                 break;
             case R.id.tv_people:
+                resetBottomBar();   //重置颜色
                 mViewPager.setCurrentItem(3, false);
                 mPeople.setTextColor(Color.parseColor("#227700"));
                 break;
@@ -203,8 +211,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.img_search:
                 startActivity(new Intent(getApplicationContext(), SearchActivity.class));
                 break;
-            case R.id.img_add_category: //添加分类页面
-                startActivity(new Intent(getApplicationContext(), AddCategoryActivity.class));
+            case R.id.img_manager_category:
+                //管理分类页面
+                managerCategory = new MenuPopupWindow(this, itemsOnClick);
+                managerCategory.showAtLocation(findViewById(R.id.LL_MainLayout),
+                        Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                Log.i("弹窗", "下拉菜单");
                 break;
         }
     }
@@ -213,10 +225,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private View.OnClickListener itemsOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            menuWindow.dismiss();
             switch (v.getId()) {
                 // 拍照
                 case R.id.takePhotoBtn:
+                    menuWindow.dismiss();
                     Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     //下面这句指定调用相机拍照后的照片存储的路径
                    // ClipData.Item.getUri()
@@ -226,10 +238,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     break;
                 // 相册选择图片
                 case R.id.pickPhotoBtn:
+                    menuWindow.dismiss();
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
                     // 如果朋友们要限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型"
                     pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                     startActivityForResult(pickIntent, REQUESTCODE_PICK);
+                    break;
+                case R.id.cancelBtn:
+                    menuWindow.dismiss();
+                    break;
+                case R.id.btn_menu_add_category:
+                    managerCategory.dismiss();
+                    startActivity(new Intent(getApplicationContext(), AddCategoryActivity.class));
+                    break;
+                case R.id.btn_menu_delete_category:
+                    managerCategory.dismiss();
+                    startActivity(new Intent(getApplicationContext(), DeleteCategoryActivity.class));
                     break;
                 default:
                     break;
@@ -241,21 +265,44 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+            return ;
+        }
         switch (requestCode) {
             case REQUESTCODE_PICK:// 直接从相册获取
                 try {
-                    startPhotoZoom(data.getData());
-                } catch (NullPointerException e) {
-                    e.printStackTrace();// 用户点击取消操作
+                    urlpath  = data.getData().toString();
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (!TextUtils.isEmpty(urlpath)) {
+                    Intent intent = new Intent(getApplicationContext(), UploadActivity.class);
+                    intent.putExtra("url", urlpath);
+                    Log.i("2222222221urlPath", urlpath);
+                    try {
+                        address = data.getData();
+                        photo = MediaStore.Images.Media.getBitmap(getContentResolver(), address);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    startActivityForResult(intent, REQUESTCODE_UPLOAD);
                 }
                 break;
             case REQUESTCODE_TAKE:// 调用相机拍照
                 File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
-                startPhotoZoom(Uri.fromFile(temp));
-                break;
-            case REQUESTCODE_CUTTING:// 取得裁剪后的图片
-                if (data != null) {
-                    setPicToView(data);
+                urlpath = Uri.fromFile(temp).toString();
+                if (!TextUtils.isEmpty(urlpath)) {
+                    Intent intent1 = new Intent(getApplicationContext(), UploadActivity.class);
+                    intent1.putExtra("url", urlpath);
+                    Log.i("88888888888888", urlpath);
+                    try {
+
+                        address = Uri.fromFile(temp);
+                        photo = MediaStore.Images.Media.getBitmap(getContentResolver(), address);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    startActivityForResult(intent1, REQUESTCODE_UPLOAD);
                 }
                 break;
             case REQUESTCODE_UPLOAD:    //上传图片
@@ -263,9 +310,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 title = bundle.getString("title");
                 keywords = bundle.getString("keywords");
                 description = bundle.getString("description");
-                // 新线程后台上传服务端
-                pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
-                new Thread(uploadImageRunnable).start();
+                if(photo != null) {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+                    urlpath = FileUtil.saveFile(MainActivity.this, df.format(new Date())+".jpg", photo);
+                    Log.i("图片名称123123", df.format(new Date())+".jpg"+"1234564321234");
+                    Log.i("图片路径123123", urlpath);
+                    // 新线程后台上传服务端
+                    pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
+                    Log.i("11111111111111urlPath", urlpath);
+                    new Thread(uploadImageRunnable).start();
+                }else
+                    Toast.makeText(getApplicationContext(), "位图为空", Toast.LENGTH_SHORT).show();
+
                 break;
         }
     }
@@ -278,13 +334,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
-        intent.putExtra("crop", "true");
+        intent.putExtra("crop", "false");
         // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
+        intent.putExtra("aspectX", 4);
+        intent.putExtra("aspectY", 3);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
+        intent.putExtra("outputX", 800);
+        intent.putExtra("outputY", 800);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, REQUESTCODE_CUTTING);
     }
@@ -305,9 +361,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             Log.i("图片名称", df.format(new Date())+".jpg");
             //avatarImg.setImageDrawable(drawable);
 
-            Intent intent = new Intent(getApplicationContext(), UploadActivity.class);
-            intent.putExtra("url", urlpath);
-            startActivityForResult(intent, REQUESTCODE_UPLOAD);
+
         }else {
             Log.i("裁剪图片", "失败");
         }
@@ -320,7 +374,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     Runnable uploadImageRunnable = new Runnable() {
 
         private String userid;
-
         @Override
         public void run() {
 
@@ -339,7 +392,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 textParams = new HashMap<String, String>();
                 fileparams = new HashMap<String, File>();
                 // 要上传的图片文件
+
                 File file = new File(urlpath);
+                if(file.exists()) {
+                    Log.i("1010101", "101010101010101001");
+                }
                 fileparams.put("myfile", file);
                 textParams.put("title", title);
                 textParams.put("keywords", keywords);
@@ -375,6 +432,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     // 得到网络返回的输入流
                     InputStream is = conn.getInputStream();
                     resultStr = NetUtil.readString(is);
+                    file.delete();  //删除暂存的图片文件
                 } else {
                     Log.i("上传错误", "请求URL失败！");
                 }
@@ -412,4 +470,5 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mMyPhoto.setTextColor(Color.parseColor("#CACDD0"));
         mPeople.setTextColor(Color.parseColor("#CACDD0"));
     }
+
 }

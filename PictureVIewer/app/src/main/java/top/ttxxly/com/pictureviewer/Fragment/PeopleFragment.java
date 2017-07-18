@@ -47,12 +47,10 @@ public class PeopleFragment extends Fragment implements View.OnClickListener{
     private Bundle bundle;
     private String content;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i("我onCreateView", "我onCreateView执行了");
+        Log.i("wo", "onCreateView()被调用");
         View view = inflater.inflate(R.layout.fragment_people, container, false);
 
         rl_portrait = (RelativeLayout) view.findViewById(R.id.RL_fragment_people_portrait);

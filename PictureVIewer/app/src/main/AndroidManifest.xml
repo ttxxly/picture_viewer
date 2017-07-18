@@ -31,7 +31,10 @@
         <activity android:name=".Activity.EditPortraitActivity" />
         <activity android:name=".Activity.UploadActivity" />
         <activity android:name=".Activity.AddCategoryActivity" />
-        <activity android:name=".Activity.CategoryActivity"></activity>
+        <activity android:name=".Activity.CategoryActivity" />
+        <activity android:name=".Activity.EditCategoryActivity" />
+        <activity android:name=".Activity.DeleteCategoryActivity" />
+        <activity android:name=".Activity.EditPicActivity"></activity>
     </application>
 
 </manifest>

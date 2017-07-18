@@ -25,7 +25,6 @@ import java.util.List;
 
 import top.ttxxly.com.pictureviewer.Adapter.Home_GlideAdapter;
 import top.ttxxly.com.pictureviewer.R;
-import top.ttxxly.com.pictureviewer.Utils.SharedPreferenceUtils;
 import top.ttxxly.com.pictureviewer.Utils.StreamUtils;
 import top.ttxxly.com.pictureviewer.models.Photos;
 import top.ttxxly.com.pictureviewer.models.User;
@@ -116,7 +115,7 @@ public class SearchActivity extends AppCompatActivity {
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
-            String url = Url + "/interface/selectpic.php" + "?userid=" + SharedPreferenceUtils.getString("UserId", "", getApplicationContext()) + "&keywords=" + keywords;
+            String url = Url + "/interface/selectpic.php" + "?userid=" + "" + "&keys=" + keywords;
             Log.i("URl", url);
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
@@ -140,10 +139,10 @@ public class SearchActivity extends AppCompatActivity {
                 if (flat.equals("success")) {
                     Log.i("Status", "登录成功，3秒后跳转。。。");
                     msg.what = 1;
-                    msg.obj = data;
                 } else {
                     msg.what = -1;
                 }
+                msg.obj = data;
                 handler.sendMessage(msg);
             } else {
                 Log.i("访问失败", "responseCode");

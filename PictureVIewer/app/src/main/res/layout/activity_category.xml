@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="top.ttxxly.com.pictureviewer.Activity.CategoryActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#2D3D54">
 
     <GridView
         android:id="@+id/GV_category_activity"
