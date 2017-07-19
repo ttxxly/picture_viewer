@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -68,7 +70,88 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         et_nickname = (EditText) findViewById(R.id.et_login_nickname);
+        et_nickname.addTextChangedListener(new TextWatcher() {  //监听输入的内容
+
+            private CharSequence temp;
+            private int selectionStart;
+            private int selectionEnd;
+
+            /**
+             * 在原有的文本s中，从start开始的count个字符将会被一个新的长度为after的文本替换，
+             * 注意这里是将被替换，还没有被替换。原文本 s 不能被修改
+             * @param s 原来的文本
+             * @param start 即将改变的开始位置
+             * @param count 将要改变的字符数
+             * @param after 新文本的长度
+             */
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.i("beforeTextChanged", "s="+s+" start="+start + " count="+count+" after="+after);
+                temp = s;
+            }
+
+
+            /**
+             * 在原有的文本s中，从start开始的count个字符替换长度为before的旧文本，执行了替换动作。
+             * 原文本 s 不能被修改
+             * @param s     原文本
+             * @param start 将被替换的开始位置
+             * @param before    原文本中被替换的长度
+             * @param count     从start开始将被替换的字符数
+             */
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("onTextChanged", "s="+s+" start="+start + " count="+count+" before="+before);
+            }
+
+            /**
+             * 在EditText内容已经改变之后调用
+             * @param s
+             */
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.i("afterTextChanged", "内容已经改变");
+                selectionStart = et_nickname.getSelectionStart();   //光标的偏移量
+                selectionEnd = et_nickname.getSelectionEnd();
+                if (temp.length() > 20) {
+                    Toast.makeText(LoginActivity.this, "亲，你的名字实在是太长了", Toast.LENGTH_SHORT).show();
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    et_nickname.setText(s);
+                    et_nickname.setSelection(tempSelection);
+                }
+            }
+        });
+
         et_password = (EditText) findViewById(R.id.et_login_password);
+        et_password.addTextChangedListener(new TextWatcher() {
+            private CharSequence temp;
+            private int selectionStart;
+            private int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                temp = s;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                selectionStart = et_password.getSelectionStart();   //光标的偏移量
+                selectionEnd = et_password.getSelectionEnd();
+                if (temp.length() > 10) {
+                    Toast.makeText(LoginActivity.this, "亲，你的密码还是不要太复杂吧", Toast.LENGTH_SHORT).show();
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    et_password.setText(s);
+                    et_password.setSelection(tempSelection);
+                }
+            }
+        });
         btn_login = (Button) findViewById(R.id.btn_login);
         TextView mLook = (TextView) findViewById(R.id.tv_login_look_around);
         mLook.setOnClickListener(new View.OnClickListener() {
@@ -126,8 +209,6 @@ public class LoginActivity extends AppCompatActivity {
             user.setNickname(s);
         }
         user.setPassword(et_password.getText().toString());
-
-
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
