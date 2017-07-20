@@ -8,10 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tv_register;
     private String s;   //保存返回的 JSON 数据
     private String Url = "http://10.0.2.2/picture_viewer";
+    private ImageView mShowPwd;
+    private ImageView mDeleteNickname;
+    private TextView mLook;
 
     private Handler handler = new Handler(){
         @Override
@@ -69,7 +76,31 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        init();
+        setEventListener();
+
+    }
+
+    /**
+     * 初始化该页面各个组件
+     */
+    private void init() {
+
         et_nickname = (EditText) findViewById(R.id.et_login_nickname);
+        mDeleteNickname = (ImageView) findViewById(R.id.img_login_delete_nickname);
+        mShowPwd = (ImageView) findViewById(R.id.img_login_show_pwd);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        et_password = (EditText) findViewById(R.id.et_login_password);
+        mLook = (TextView) findViewById(R.id.tv_login_look_around);
+        tv_register = (TextView) findViewById(R.id.tv_register);
+
+    }
+
+    /**
+     * 为该页面各组件设置事件侦听
+     */
+    private void setEventListener() {
+
         et_nickname.addTextChangedListener(new TextWatcher() {  //监听输入的内容
 
             private CharSequence temp;
@@ -123,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        et_password = (EditText) findViewById(R.id.et_login_password);
+
         et_password.addTextChangedListener(new TextWatcher() {
             private CharSequence temp;
             private int selectionStart;
@@ -152,8 +183,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        btn_login = (Button) findViewById(R.id.btn_login);
-        TextView mLook = (TextView) findViewById(R.id.tv_login_look_around);
+
+
         mLook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,11 +207,40 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        tv_register = (TextView) findViewById(R.id.tv_register);
+
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            }
+        });
+
+        mDeleteNickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_nickname.setText("");
+            }
+        });
+        mShowPwd.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //隐藏密码
+                //et_password.setTransformationMethod((PasswordTransformationMethod.getInstance()));
+                //显示密码
+               // et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN://按住
+                        Log.i("按住", "按住");
+                        et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        break;
+                    case MotionEvent.ACTION_MOVE://移动
+                        break;
+                    case MotionEvent.ACTION_UP: //松开
+                        Log.i("松开", "松开");
+                        et_password.setTransformationMethod((PasswordTransformationMethod.getInstance()));
+                        break;
+                }
+                return true;
             }
         });
     }
