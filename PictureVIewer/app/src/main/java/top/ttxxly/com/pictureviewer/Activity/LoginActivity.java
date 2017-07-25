@@ -88,7 +88,9 @@ public class LoginActivity extends AppCompatActivity {
 
         et_nickname = (EditText) findViewById(R.id.et_login_nickname);
         mDeleteNickname = (ImageView) findViewById(R.id.img_login_delete_nickname);
+        mDeleteNickname.setVisibility(View.GONE);   //设置图片隐藏
         mShowPwd = (ImageView) findViewById(R.id.img_login_show_pwd);
+        mShowPwd.setVisibility(View.GONE);//设置图片隐藏
         btn_login = (Button) findViewById(R.id.btn_login);
         et_password = (EditText) findViewById(R.id.et_login_password);
         mLook = (TextView) findViewById(R.id.tv_login_look_around);
@@ -151,6 +153,10 @@ public class LoginActivity extends AppCompatActivity {
                     et_nickname.setText(s);
                     et_nickname.setSelection(tempSelection);
                 }
+                if(temp.length() > 0)
+                    mDeleteNickname.setVisibility(View.VISIBLE);
+                else
+                    mDeleteNickname.setVisibility(View.GONE);
             }
         });
 
@@ -181,6 +187,10 @@ public class LoginActivity extends AppCompatActivity {
                     et_password.setText(s);
                     et_password.setSelection(tempSelection);
                 }
+                if(temp.length() > 0)
+                    mShowPwd.setVisibility(View.VISIBLE);
+                else
+                    mShowPwd.setVisibility(View.GONE);
             }
         });
 
@@ -214,7 +224,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
-
         mDeleteNickname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
